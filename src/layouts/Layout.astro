@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+import PageInteractions from '../components/PageInteractions.astro';
+import { Sun, Moon, Menu, ArrowUpRight, MessageCircle } from 'lucide-astro';
+interface Props { title?: string; description?: string; canonical?: string; }
+const {
+  title = 'Alien Creativo | Estrategia, Marketing & Tecnología',
+  description = 'Conectamos marketing, inteligencia artificial y procesos comerciales para ayudar a tu empresa a crecer con dirección.',
+  canonical = 'https://aliencreativo.com/'
+} = Astro.props;
+const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizacion',label:'IA y automatización'}, {href:'#servicios',label:'Servicios'}, {href:'#casos',label:'Casos'}];
+---
+<!doctype html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/assets/brand/alien-symbol.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Alien Creativo" />
+    <meta property="og:locale" content="es_CO" />
+    <meta name="theme-color" content="#0b171e" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script is:inline>
+      try { document.documentElement.classList.toggle('dark', localStorage.getItem('theme') !== 'light'); } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" aria-label="Alien Creativo, inicio">
+          <img class="brand-logo logo-light" src="/assets/images/logo-alien-creativo.svg" alt="Alien Creativo" width="178" height="56" />
+          <img class="brand-logo logo-dark" src="/assets/images/logo-alien-creativo-light.svg" alt="Alien Creativo" width="178" height="56" />
+        </a>
+        <nav class="desktop-nav" aria-label="Navegación principal">{nav.map(item => <a href={item.href}>{item.label}</a>)}</nav>
+        <div class="header-actions">
+          <button id="theme-toggle" class="icon-button" aria-label="Cambiar a tema claro"><Sun class="theme-sun" size={16} strokeWidth={1.5} /><Moon class="theme-moon" size={16} strokeWidth={1.5} /></button>
+          <a class="button button-primary" href="#diagnostico">Solicitar mi Diagnóstico Digital <ArrowUpRight size={15} /></a>
+          <details class="mobile-menu">
+            <summary class="icon-button" aria-label="Abrir menú de navegación"><Menu size={19} strokeWidth={1.5} /></summary>
+            <nav class="mobile-nav" aria-label="Navegación móvil">{nav.map(item => <a href={item.href}>{item.label}</a>)}<a href="#diagnostico">Solicitar mi Diagnóstico Digital</a></nav>
+          </details>
+        </div>
+      </div>
+      <span class="reading-progress" aria-hidden="true"></span>
+    </header>
+    <main id="contenido" tabindex="-1"><slot /></main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" aria-label="Alien Creativo, inicio">
+              <img class="brand-logo logo-light" src="/assets/images/logo-alien-creativo.svg" alt="Alien Creativo" width="178" height="56" loading="lazy" />
+              <img class="brand-logo logo-dark" src="/assets/images/logo-alien-creativo-light.svg" alt="Alien Creativo" width="178" height="56" loading="lazy" />
+            </a>
+            <p>Marketing de Verdad.</p>
+            <p>Conectamos personas, procesos, marketing y tecnología para construir soluciones digitales alineadas con los objetivos de cada negocio.</p>
+            <p>Medellín es nuestra ubicación prioritaria.</p>
+          </div>
+          <div><h3>Navegación</h3><div class="footer-links"><a href="#inicio">Inicio</a><a href="#diagnostico">Diagnóstico Digital</a><a href="#ia-automatizacion">Inteligencia Artificial y Automatización</a><a href="#marketing-demanda">Marketing Digital</a><a href="#seo-geo-aeo">SEO, GEO y AEO</a><a href="#desarrollo-web">Desarrollo Web</a><a href="#crm-procesos">CRM y Procesos Comerciales</a><a href="#casos">Casos y Experiencias</a><a href="#contacto">Contacto</a></div></div>
+          <div><h3>Contacto</h3><div class="footer-links"><a href="mailto:hola@aliencreativo.com">hola@aliencreativo.com</a><a href="https://wa.me/573053552822" target="_blank" rel="noopener noreferrer">+57 305 355 2822</a><span>Medellín y Valle de Aburrá,<br />Colombia</span></div></div>
+        </div>
+        <div class="footer-bottom"><span>© {new Date().getFullYear()} Alien Creativo. Todos los derechos reservados.</span><span>Marketing de Verdad.</span></div>
+      </div>
+    </footer>
+    <a class="whatsapp-float" href="https://wa.me/573053552822?text=Hola%2C%20quiero%20conversar%20sobre%20mi%20empresa" target="_blank" rel="noopener noreferrer" aria-label="Conversar por WhatsApp"><MessageCircle size={23} strokeWidth={1.5} /></a>
+    <script>
+      const toggle = document.getElementById('theme-toggle');
+      function syncTheme() {
+        const dark=document.documentElement.classList.contains('dark');
+        toggle?.setAttribute('aria-label',dark?'Cambiar a tema claro':'Cambiar a tema oscuro');
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#0b171e':'#f7f8f6');
+      }
+      syncTheme();
+      toggle?.addEventListener('click', () => {
+        const dark = document.documentElement.classList.toggle('dark');
+        try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch {}
+        syncTheme();
+      });
+      const mobileMenu=document.querySelector<HTMLDetailsElement>('.mobile-menu');
+      const menuTrigger=mobileMenu?.querySelector<HTMLElement>('summary');
+      mobileMenu?.addEventListener('toggle',()=>menuTrigger?.setAttribute('aria-label',mobileMenu.open?'Cerrar menú de navegación':'Abrir menú de navegación'));
+      document.querySelectorAll('.mobile-nav a').forEach(link => link.addEventListener('click', () => mobileMenu?.removeAttribute('open')));
+      document.addEventListener('keydown',event=>{
+        if(event.key==='Escape'&&mobileMenu?.open){mobileMenu.open=false;menuTrigger?.focus();}
+      });
+      document.addEventListener('pointerdown',event=>{
+        if(mobileMenu?.open&&!mobileMenu.contains(event.target as Node))mobileMenu.open=false;
+      });
+      window.matchMedia('(min-width: 901px)').addEventListener('change',event=>{
+        if(event.matches&&mobileMenu)mobileMenu.open=false;
+      });
+    </script>
+    <PageInteractions />
+  </body>
+</html>
+
+

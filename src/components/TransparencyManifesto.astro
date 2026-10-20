@@ -1,0 +1,14 @@
+---
+import SectionMarker from './SectionMarker.astro';
+import { copy,groups } from '../lib/home';
+import ClientBlocks from './ClientBlocks.astro';
+const blocks=copy(9);
+const content=groups(blocks.slice(1),3);
+---
+<section id="filosofia" class="section">
+  <SectionMarker index="08" />
+  <div class="container manifesto">
+    <div class="section-heading"><span class="eyebrow">Transparencia y diferenciación</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
+    <div>{content.groups.map(p=><article class="principle"><h3>{p.title}</h3><ClientBlocks blocks={p.blocks} /></article>)}</div>
+  </div>
+</section>

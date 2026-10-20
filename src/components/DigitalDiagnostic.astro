@@ -1,0 +1,50 @@
+---
+import SectionMarker from './SectionMarker.astro';
+import { ArrowUpRight, LockKeyhole } from 'lucide-astro';
+import { copy,cta } from '../lib/home';
+import ClientBlocks from './ClientBlocks.astro';
+const blocks=copy(3);
+---
+
+<section id="diagnostico" class="section">
+  <SectionMarker index="02" />
+  <div class="container diagnostic-grid">
+    <div>
+      <div class="section-heading"><span class="eyebrow">Diagnóstico Digital</span><h2>{blocks[0].text}</h2></div>
+      <ClientBlocks blocks={blocks.slice(1)} />
+    </div>
+    <div class="diagnostic-form">
+      <div class="diagnostic-signature" aria-hidden="true"><img src="/assets/brand/alien-symbol.svg" alt="" width="28" height="39" loading="lazy" /><span></span></div>
+      <h3>{cta(blocks,'CTA principal')}</h3>
+      <p class="form-intro">Completa tus datos para preparar tu solicitud. Se abrirá WhatsApp con un mensaje que podrás revisar y enviar para iniciar la conversación.</p>
+      <form id="diagnostic-form" class="form-fields">
+        <div><label for="company-name">Empresa *</label><input id="company-name" name="company" autocomplete="organization" required placeholder="El nombre de tu empresa" /></div>
+        <div class="form-pair">
+          <div><label for="contact-name">Tu nombre *</label><input id="contact-name" name="name" autocomplete="name" required placeholder="¿Cómo te llamas?" /></div>
+          <div><label for="contact-phone">WhatsApp *</label><input id="contact-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+57 300 000 0000" /></div>
+        </div>
+        <div><label for="website-social">Sitio web o redes sociales</label><input id="website-social" name="website" placeholder="tuempresa.com o @tuempresa" /></div>
+        <div><label for="main-challenge">¿Qué quieres mejorar? *</label><select id="main-challenge" name="challenge" required><option value="" disabled selected>Selecciona tu principal desafío</option><option>Atraer más clientes calificados</option><option>Mejorar el seguimiento comercial</option><option>Automatizar tareas con inteligencia artificial</option><option>Crear o renovar mi sitio web</option><option>Organizar el CRM y las ventas</option></select></div>
+        <button class="button button-primary" type="submit" style="width:100%;margin-top:8px">{cta(blocks,'CTA principal')} <ArrowUpRight size={17} /></button>
+      </form>
+      <p class="form-privacy"><LockKeyhole size={13} strokeWidth={1.5} class="quiet-icon" /> Tú decides cuándo enviar tu solicitud por WhatsApp.</p>
+    </div>
+  </div>
+</section>
+<script>
+  const form = document.getElementById('diagnostic-form') as HTMLFormElement | null;
+  form?.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    const data = new FormData(form);
+    const message = [
+      'Hola Alien Creativo, quiero solicitar el Diagnóstico Digital para mi empresa.',
+      '', 'Empresa: ' + data.get('company'), 'Contacto: ' + data.get('name'),
+      'WhatsApp: ' + data.get('phone'), 'Web / redes: ' + (data.get('website') || 'No indicada'),
+      'Desafío: ' + data.get('challenge')
+    ].join('\n');
+    window.open('https://wa.me/573053552822?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+  });
+</script>
+
+

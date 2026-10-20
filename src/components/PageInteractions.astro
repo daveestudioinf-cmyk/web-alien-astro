@@ -1,0 +1,78 @@
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const root = document.documentElement;
+
+  // Keyboard actions remain immediate; pointer feedback is deliberately brief.
+  window.addEventListener('pointerdown', () => { root.dataset.input = 'pointer'; }, { passive: true });
+  window.addEventListener('keydown', () => { root.dataset.input = 'keyboard'; });
+
+  const progress = document.querySelector<HTMLElement>('.reading-progress');
+  let scheduled = false;
+  function updateProgress() {
+    const distance = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = distance > 0 ? Math.min(1, Math.max(0, window.scrollY / distance)) : 0;
+    if (progress) progress.style.transform = `scaleX(${ratio})`;
+    scheduled = false;
+  }
+  function scheduleProgress() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(updateProgress);
+  }
+  window.addEventListener('scroll', scheduleProgress, { passive: true });
+  window.addEventListener('resize', scheduleProgress, { passive: true });
+  new ResizeObserver(scheduleProgress).observe(document.body);
+  updateProgress();
+
+  const navigationLinks = document.querySelectorAll<HTMLAnchorElement>('.desktop-nav a, .mobile-nav a');
+  const visibleLocations = new Set<Element>();
+  function updateLocation(entries: IntersectionObserverEntry[]) {
+    for (const entry of entries) {
+      if (entry.isIntersecting) visibleLocations.add(entry.target);
+      else visibleLocations.delete(entry.target);
+    }
+    const current = [...visibleLocations].sort((a,b)=>b.getBoundingClientRect().top-a.getBoundingClientRect().top)[0];
+    navigationLinks.forEach(link => {
+      if (current && link.getAttribute('href') === `#${current.id}`) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }
+  const regions = document.querySelectorAll('main > section[id], #ia-automatizacion');
+  let locationObserver: IntersectionObserver;
+  function observeLocations() {
+    locationObserver?.disconnect();
+    visibleLocations.clear();
+    // Observer percentages are based on width, so use height-based pixels here.
+    const readingLine = Math.min(innerHeight-2, Math.max(100, Math.round(innerHeight*.25)));
+    locationObserver = new IntersectionObserver(updateLocation, {
+      rootMargin: `-${readingLine}px 0px -${Math.max(0,innerHeight-readingLine-2)}px 0px`
+    });
+    regions.forEach(section => locationObserver.observe(section));
+  }
+  observeLocations();
+  let locationResize = 0;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(locationResize);
+    locationResize = requestAnimationFrame(observeLocations);
+  }, { passive: true });
+
+  // One gentle entrance per chapter. Content is visible even without JavaScript.
+  const entrances = new Set<Animation>();
+  const headingObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      headingObserver.unobserve(entry.target);
+      if (reducedMotion.matches || root.dataset.input === 'keyboard') continue;
+      const animation = entry.target.animate([
+        { opacity: .65, transform: 'translateY(8px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], { duration: 300, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
+      entrances.add(animation);
+      animation.finished.then(() => entrances.delete(animation), () => entrances.delete(animation));
+    }
+  }, { threshold: .15 });
+  document.querySelectorAll('.section-heading').forEach(heading => headingObserver.observe(heading));
+  reducedMotion.addEventListener('change', event => {
+    if (event.matches) entrances.forEach(animation => animation.cancel());
+  });
+</script>

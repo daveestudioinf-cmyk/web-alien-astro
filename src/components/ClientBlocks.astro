@@ -1,0 +1,16 @@
+---
+import type { CopyBlock } from '../lib/home';
+interface Props { blocks: CopyBlock[]; }
+const { blocks } = Astro.props;
+---
+<div class="client-copy">
+  {blocks.map(block => {
+    if (block.type === 'paragraph') return <p>{block.text}</p>;
+    if (block.type === 'list') return <ul>{block.items?.map(item => <li>{item}</li>)}</ul>;
+    if (block.type === 'heading') {
+      const Heading = block.level === 4 ? 'h4' : 'h3';
+      return <Heading>{block.text}</Heading>;
+    }
+    return null;
+  })}
+</div>

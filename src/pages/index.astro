@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+
+import ProblemFrictions from '../components/ProblemFrictions.astro';
+import DigitalDiagnostic from '../components/DigitalDiagnostic.astro';
+import EcosystemMethod from '../components/EcosystemMethod.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+import CaseStudyColorDiseno from '../components/CaseStudyColorDiseno.astro';
+import VideoTestimonials from '../components/VideoTestimonials.astro';
+import MethodologySteps from '../components/MethodologySteps.astro';
+import TransparencyManifesto from '../components/TransparencyManifesto.astro';
+import FaqSection from '../components/FaqSection.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+import { meta } from '../lib/home';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Alien Creativo',
+  url: 'https://aliencreativo.com/',
+  logo: 'https://aliencreativo.com/assets/images/logo-alien-creativo.svg',
+  description: 'Estrategia, marketing digital, inteligencia artificial y procesos comerciales.',
+  email: 'hola@aliencreativo.com',
+  telephone: '+573053552822',
+  areaServed: ['Medellín', 'Valle de Aburrá']
+};
+---
+<Layout title={meta.title} description={meta.description} canonical={meta.canonical}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Hero />
+
+  <ProblemFrictions />
+  <DigitalDiagnostic />
+  <EcosystemMethod />
+  <ServicesGrid />
+  <CaseStudyColorDiseno />
+  <VideoTestimonials />
+  <MethodologySteps />
+  <TransparencyManifesto />
+  <FaqSection />
+  <FinalCta />
+</Layout>
+

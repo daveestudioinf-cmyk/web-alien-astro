@@ -1,0 +1,10 @@
+---
+import { Plus } from 'lucide-astro';
+const areas = ['Estrategia digital', 'Inteligencia artificial', 'SEO & GEO', 'Desarrollo web', 'CRM & automatización'];
+---
+<div class="expertise-strip">
+  <div class="container expertise-inner" aria-label="Nuestras especialidades">
+    {areas.map((area, i) => <><span>{area}</span>{i < areas.length - 1 && <Plus size={14} strokeWidth={1.3} aria-hidden="true" />}</>)}
+  </div>
+</div>
+

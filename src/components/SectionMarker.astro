@@ -1,0 +1,9 @@
+---
+interface Props { index: string; }
+const { index } = Astro.props;
+---
+<div class="section-marker" aria-hidden="true">
+  <span class="chapter-number">{index}</span>
+  <span class="chapter-rule"></span>
+  <img class="chapter-brand" src="/assets/brand/alien-symbol.svg" alt="" width="14" height="20" loading="lazy" />
+</div>

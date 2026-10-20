@@ -1,0 +1,74 @@
+---
+import SectionMarker from './SectionMarker.astro';
+import { ArrowUpRight, MessagesSquare, ScanLine, ListOrdered, Workflow, ChartNoAxesCombined } from 'lucide-astro';
+import { copy,groups,cta } from '../lib/home';
+import ClientBlocks from './ClientBlocks.astro';
+const blocks=copy(8);
+const content=groups(blocks.slice(1),3);
+const icons=[MessagesSquare,ScanLine,ListOrdered,Workflow,ChartNoAxesCombined];
+---
+<section id="metodologia" class="section surface">
+  <SectionMarker index="07" />
+  <div class="container">
+    <div class="section-heading"><span class="eyebrow">Metodología de trabajo</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
+    <div class="mission-journey">
+      <div class="mission-portrait" aria-hidden="true">
+        <div class="mission-chart">
+          <svg viewBox="0 0 400 400" fill="none" class="mission-coordinates">
+            <circle cx="200" cy="200" r="174" /><circle cx="200" cy="200" r="128" />
+            <path d="M10 200H390M200 10V390" stroke-dasharray="3 9" />
+            <path d="M44 280Q110 352 210 310T355 102" stroke-dasharray="4 7" />
+            <circle cx="44" cy="280" r="4" /><circle cx="210" cy="310" r="4" /><circle cx="355" cy="102" r="4" />
+          </svg>
+          <img class="mission-alien" src="/assets/brand/alien-mission-v1.webp" alt="" width="1280" height="1280" loading="lazy" />
+          <img class="mission-signature" src="/assets/brand/alien-symbol.svg" alt="" width="30" height="42" loading="lazy" />
+        </div>
+        <div class="mission-caption"><span>Alien Creativo</span><span>01 — 05</span></div>
+        <p>Marketing de Verdad.</p>
+      </div>
+      <ol class="mission-steps" aria-label="Las cinco etapas de nuestra metodología">
+        <li class="mission-rail" aria-hidden="true"><span class="mission-progress"></span><span class="mission-vessel"><svg viewBox="0 0 32 24" fill="none"><path d="M10 10C11 2 21 2 22 10M3 13Q16 4 29 13Q16 23 3 13Z" stroke="currentColor" stroke-width="1.5" /></svg></span></li>
+        {content.groups.map((s,index)=>{const Icon=icons[index];return <li class="mission-step" data-stage={index} aria-current={index===0?'step':undefined}>
+          <span class="mission-node">0{index+1}</span>
+          <article><div class="mission-step-title"><h3>{s.title.replace(/^\d+\. /,'')}</h3><Icon size={22} strokeWidth={1.3} aria-hidden="true" /></div><ClientBlocks blocks={s.blocks} /></article>
+        </li>;})}
+      </ol>
+    </div>
+    <a href="#diagnostico" class="button button-primary" style="margin-top:36px">{cta(blocks)} <ArrowUpRight size={17} /></a>
+  </div>
+</section>
+<script>
+  const journey=document.querySelector<HTMLElement>('.mission-journey');
+  if(journey){
+    const list=journey.querySelector<HTMLElement>('.mission-steps')!;
+    const steps=[...journey.querySelectorAll<HTMLElement>('.mission-step')];
+    const rail=journey.querySelector<HTMLElement>('.mission-rail')!;
+    const progress=journey.querySelector<HTMLElement>('.mission-progress')!;
+    const vessel=journey.querySelector<HTMLElement>('.mission-vessel')!;
+    let scheduled=false, visible=false;
+    function update(){
+      scheduled=false;
+      const listTop=list.getBoundingClientRect().top;
+      const centers=steps.map(step=>{const r=step.querySelector('.mission-node')!.getBoundingClientRect();return r.top+r.height/2-listTop;});
+      const distance=centers.at(-1)!-centers[0];
+      const travel=Math.min(distance,Math.max(0,innerHeight*.52-listTop-centers[0]));
+      rail.style.top=`${centers[0]}px`;
+      rail.style.height=`${distance}px`;
+      progress.style.transform=`scaleY(${distance?travel/distance:0})`;
+      vessel.style.transform=`translate(-50%, ${travel}px)`;
+      let active=0;
+      centers.forEach((center,index)=>{if(center-centers[0]<=travel+12)active=index;});
+      steps.forEach((step,index)=>{
+        step.dataset.reached=String(index<=active);
+        if(index===active)step.setAttribute('aria-current','step');else step.removeAttribute('aria-current');
+      });
+    }
+    function schedule(){if(!scheduled&&visible){scheduled=true;requestAnimationFrame(update);}}
+    new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)schedule();},{rootMargin:'150px'}).observe(journey);
+    new ResizeObserver(schedule).observe(list);
+    window.addEventListener('scroll',schedule,{passive:true});
+    window.addEventListener('resize',schedule,{passive:true});
+    document.fonts.ready.then(schedule);
+    update();
+  }
+</script>

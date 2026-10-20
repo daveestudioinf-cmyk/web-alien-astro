@@ -1,0 +1,1172 @@
+{
+  "meta": {
+    "title": "Agencia de Marketing Digital en Medellín | Alien Creativo",
+    "description": "Conectamos marketing, inteligencia artificial y automatización para ayudar a empresas a captar oportunidades, mejorar su seguimiento comercial y tomar decisiones con datos.",
+    "canonical": "https://aliencreativo.com/"
+  },
+  "sections": {
+    "1": {
+      "label": "HERO — Propuesta de valor principal",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Marketing, tecnología y procesos comerciales para crecer con dirección."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ayudamos a empresas a crecer en ventas y rentabilidad con un método que conecta marketing, tecnología y procesos comerciales para convertir los datos en decisiones, sin improvisar ni desperdiciar inversión."
+        },
+        {
+          "type": "paragraph",
+          "text": "Integramos estrategia, inteligencia artificial y automatización para que tu empresa pueda atraer mejores oportunidades, darles seguimiento y entender qué está funcionando."
+        },
+        {
+          "type": "cta",
+          "role": "CTA principal",
+          "text": "Solicitar mi Diagnóstico Digital"
+        },
+        {
+          "type": "cta",
+          "role": "CTA secundario",
+          "text": "Explorar soluciones de IA y automatización"
+        },
+        {
+          "type": "paragraph",
+          "text": "Primero entendemos tu negocio. Después recomendamos qué vale la pena implementar."
+        }
+      ]
+    },
+    "2": {
+      "label": "IDENTIFICACIÓN DEL PROBLEMA",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Tu empresa está creciendo o simplemente está haciendo más cosas?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Tener una página web, invertir en publicidad o publicar en redes sociales no garantiza que tu negocio esté creciendo de forma sostenible."
+        },
+        {
+          "type": "paragraph",
+          "text": "Cuando el marketing, las ventas y la operación funcionan por separado, aparecen problemas que consumen tiempo, dinero y oportunidades comerciales."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Atraes clientes potenciales, pero pierdes oportunidades en el seguimiento"
+        },
+        {
+          "type": "paragraph",
+          "text": "Llegan mensajes por WhatsApp, formularios o redes sociales, pero algunos quedan sin respuesta, se atienden tarde o nadie vuelve a contactar a las personas interesadas."
+        },
+        {
+          "type": "paragraph",
+          "text": "La oportunidad: conectar la captación con procesos de seguimiento que ayuden a atender cada contacto a tiempo."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Inviertes en marketing, pero no tienes claridad sobre lo que funciona"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ves clics, impresiones, visitas y seguidores, pero no siempre puedes relacionar esos indicadores con conversaciones comerciales, oportunidades y ventas."
+        },
+        {
+          "type": "paragraph",
+          "text": "La oportunidad: conectar las métricas de marketing con información comercial útil para tomar mejores decisiones."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Tu equipo dedica demasiado tiempo a tareas repetitivas"
+        },
+        {
+          "type": "paragraph",
+          "text": "Copiar información, responder las mismas preguntas, actualizar bases de datos y coordinar procesos manualmente reduce el tiempo disponible para actividades de mayor valor."
+        },
+        {
+          "type": "paragraph",
+          "text": "La oportunidad: identificar qué tareas pueden automatizarse y dónde la inteligencia artificial puede aportar valor real."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Tienes varias herramientas, pero ninguna cuenta la historia completa"
+        },
+        {
+          "type": "paragraph",
+          "text": "Tu página web, CRM, publicidad, WhatsApp y bases de datos pueden funcionar de forma aislada, dificultando el seguimiento de clientes y la lectura del negocio."
+        },
+        {
+          "type": "paragraph",
+          "text": "La oportunidad: integrar las herramientas necesarias para que la información fluya y sea más fácil de utilizar."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "El negocio depende demasiado de ti"
+        },
+        {
+          "type": "paragraph",
+          "text": "Si cada decisión, conversación o proceso necesita tu intervención, crecer puede significar más carga operativa en lugar de más capacidad para el negocio."
+        },
+        {
+          "type": "paragraph",
+          "text": "La oportunidad: documentar, organizar y automatizar procesos para reducir dependencias innecesarias."
+        },
+        {
+          "type": "paragraph",
+          "text": "No necesitas implementar más herramientas por el simple hecho de tenerlas. Necesitas identificar qué está frenando tu crecimiento y resolverlo en el orden correcto."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Quiero identificar qué necesita mi empresa"
+        }
+      ]
+    },
+    "3": {
+      "label": "DIAGNÓSTICO DIGITAL — Conversión principal",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Antes de invertir más, descubre qué necesita realmente tu negocio."
+        },
+        {
+          "type": "paragraph",
+          "text": "El Diagnóstico Digital de Alien Creativo es el punto de partida para entender cómo se relacionan tu presencia digital, tus procesos comerciales y tus herramientas tecnológicas."
+        },
+        {
+          "type": "paragraph",
+          "text": "Analizamos tu situación para identificar oportunidades, detectar fricciones y establecer prioridades de mejora acordes con los objetivos y la realidad de tu empresa."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "¿Qué buscamos identificar?"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Oportunidades de captación: cómo te encuentran tus clientes potenciales y qué posibilidades existen para mejorar tu visibilidad.",
+            "Fricciones en la conversión: qué puede estar dificultando que una visita, consulta o contacto avance hacia una oportunidad comercial.",
+            "Puntos débiles del seguimiento: cómo se gestionan los contactos y dónde podrían perderse oportunidades.",
+            "Tareas que podrían automatizarse: qué procesos repetitivos consumen recursos y cuáles conviene optimizar.",
+            "Desconexiones entre herramientas: dónde se pierde información o se dificulta la trazabilidad.",
+            "Prioridades de inversión: qué conviene abordar primero, qué puede esperar y qué posiblemente no necesitas implementar."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "¿Qué obtienes?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Una visión más clara de tu situación digital, las oportunidades que merecen atención y los siguientes pasos recomendados para avanzar con criterio."
+        },
+        {
+          "type": "paragraph",
+          "text": "No se trata de venderte todas nuestras soluciones. Se trata de entender tu negocio antes de recomendarte cuáles tienen sentido."
+        },
+        {
+          "type": "cta",
+          "role": "CTA principal",
+          "text": "Solicitar mi Diagnóstico Digital"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cuéntanos qué hace tu empresa, cuáles son tus objetivos y qué dificultades estás encontrando. A partir de esa conversación podremos evaluar cómo ayudarte."
+        }
+      ]
+    },
+    "4": {
+      "label": "PROPUESTA DIFERENCIAL — Un ecosistema, no servicios aislados",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Tu negocio no necesita más piezas sueltas. Necesita que funcionen juntas."
+        },
+        {
+          "type": "paragraph",
+          "text": "Una campaña puede atraer visitas, una página web puede recibir contactos y un agente de inteligencia artificial puede responder mensajes. Pero si esas piezas no están conectadas con los procesos comerciales, su aporte al negocio puede quedarse limitado."
+        },
+        {
+          "type": "paragraph",
+          "text": "En Alien Creativo integramos cuatro componentes para construir soluciones alineadas con la realidad de cada empresa."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "1. Personas"
+        },
+        {
+          "type": "paragraph",
+          "text": "Comprendemos a tus clientes, tu equipo y las decisiones que intervienen en el proceso comercial."
+        },
+        {
+          "type": "paragraph",
+          "text": "La tecnología debe facilitar el trabajo de las personas, mejorar la experiencia del cliente y apoyar los objetivos del negocio."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "2. Procesos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Analizamos cómo funciona tu empresa, desde la captación de una oportunidad hasta su seguimiento y gestión."
+        },
+        {
+          "type": "paragraph",
+          "text": "Organizamos los pasos necesarios para reducir fricciones, evitar tareas innecesarias y facilitar una operación más consistente."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "3. Tecnología"
+        },
+        {
+          "type": "paragraph",
+          "text": "Seleccionamos e integramos las herramientas que responden a una necesidad concreta: sitios web, CRM, agentes de inteligencia artificial, automatizaciones, plataformas de marketing y sistemas de gestión."
+        },
+        {
+          "type": "paragraph",
+          "text": "No se trata de implementar tecnología por tendencia, sino de utilizarla cuando resuelve un problema real."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "4. Datos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Conectamos la información disponible para comprender qué está pasando, evaluar el desempeño y orientar las siguientes decisiones."
+        },
+        {
+          "type": "paragraph",
+          "text": "La medición permite detectar oportunidades de mejora y tomar decisiones con más contexto, sin depender exclusivamente de percepciones o métricas aisladas."
+        },
+        {
+          "type": "paragraph",
+          "text": "Resultado esperado: una operación digital mejor conectada, con mayor claridad sobre las oportunidades comerciales y las decisiones que pueden impulsar el crecimiento."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Descubrir oportunidades para mi empresa"
+        }
+      ]
+    },
+    "5": {
+      "label": "SERVICIOS — Soluciones conectadas con necesidades reales",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Soluciones digitales diseñadas alrededor de tu negocio"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cada empresa tiene necesidades, recursos y objetivos distintos. Por eso, nuestras soluciones parten del diagnóstico y pueden implementarse de forma progresiva, según las prioridades identificadas."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "5.1. Diagnóstico Digital y consultoría estratégica"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Entiende qué debes mejorar antes de decidir cómo hacerlo."
+        },
+        {
+          "type": "paragraph",
+          "text": "Evaluamos tu presencia digital, tus procesos comerciales y las herramientas que utilizas para identificar oportunidades, establecer prioridades y orientar las decisiones de inversión."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podemos ayudarte a:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Identificar oportunidades de crecimiento digital.",
+            "Detectar barreras que dificultan la conversión.",
+            "Priorizar iniciativas según su importancia y viabilidad.",
+            "Definir indicadores para evaluar avances.",
+            "Construir una hoja de ruta de implementación."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ideal para: empresas que necesitan claridad antes de invertir, reorganizar sus esfuerzos digitales o iniciar un proceso de transformación."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Solicitar mi Diagnóstico Digital"
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "5.2. Agenciamiento de IA y automatizaciones"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Menos tareas repetitivas. Más capacidad para atender y crecer."
+        },
+        {
+          "type": "paragraph",
+          "text": "Diseñamos e implementamos soluciones de inteligencia artificial y automatización para apoyar procesos comerciales y operativos que consumen tiempo o dificultan la atención oportuna."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podemos ayudarte a:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Implementar agentes de IA para atender consultas frecuentes.",
+            "Automatizar flujos de conversación y seguimiento.",
+            "Conectar formularios, CRM, WhatsApp y otras herramientas compatibles.",
+            "Organizar el registro y la distribución de información.",
+            "Reducir tareas manuales repetitivas.",
+            "Diseñar flujos que permitan escalar la operación con mayor orden."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "La automatización adecuada no consiste en reemplazar indiscriminadamente la intervención humana. Consiste en identificar qué tareas puede resolver la tecnología y cuáles requieren criterio, supervisión o atención personal."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ideal para: empresas con un volumen importante de consultas, procesos repetitivos, tiempos de respuesta mejorables o herramientas que no están conectadas."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Explorar soluciones de IA y automatización"
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "5.3. Marketing digital y generación de demanda"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Atrae oportunidades que tengan sentido para tu negocio."
+        },
+        {
+          "type": "paragraph",
+          "text": "Diseñamos estrategias digitales orientadas a mejorar la visibilidad, conectar con las audiencias adecuadas y facilitar el paso desde el descubrimiento hasta el contacto comercial."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podemos ayudarte con:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Estrategia de marketing digital.",
+            "Campañas de publicidad en Google Ads y Meta Ads.",
+            "Estrategia de contenidos.",
+            "Marketing de atracción y captación de oportunidades.",
+            "Optimización de páginas de aterrizaje.",
+            "Medición y análisis del desempeño de campañas.",
+            "Integración de acciones de marketing con procesos comerciales."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "No buscamos llenar tus reportes de métricas de vanidad. Buscamos que cada iniciativa tenga un propósito, indicadores relevantes y una forma razonable de evaluar su contribución."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ideal para: empresas que quieren fortalecer su captación digital, mejorar sus campañas o construir un proceso de generación de demanda más consistente."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Evaluar mi estrategia de marketing"
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "5.4. SEO, GEO y posicionamiento en buscadores e inteligencia artificial"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Haz que tus clientes potenciales puedan encontrarte cuando buscan soluciones."
+        },
+        {
+          "type": "paragraph",
+          "text": "Trabajamos el posicionamiento orgánico para mejorar la capacidad de tu empresa de aparecer en búsquedas relevantes, responder preguntas de tus audiencias y construir una presencia digital útil y coherente."
+        },
+        {
+          "type": "paragraph",
+          "text": "SEO — Search Engine Optimization"
+        },
+        {
+          "type": "paragraph",
+          "text": "Optimizamos los elementos técnicos y de contenido de tu sitio para facilitar su comprensión por los buscadores y mejorar su relevancia frente a consultas relacionadas con tus servicios."
+        },
+        {
+          "type": "paragraph",
+          "text": "GEO — Generative Engine Optimization"
+        },
+        {
+          "type": "paragraph",
+          "text": "Desarrollamos contenido y señales de autoridad que pueden ayudar a que tu marca sea comprendida y considerada por sistemas de inteligencia artificial generativa. La aparición en respuestas de IA depende de múltiples factores y no puede garantizarse."
+        },
+        {
+          "type": "paragraph",
+          "text": "AEO — Answer Engine Optimization"
+        },
+        {
+          "type": "paragraph",
+          "text": "Estructuramos contenido para responder preguntas concretas con claridad, contexto y organización, facilitando su comprensión por motores de búsqueda y sistemas que ofrecen respuestas directas."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podemos ayudarte a:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Investigar palabras clave e intención de búsqueda.",
+            "Optimizar páginas de servicios y contenido.",
+            "Mejorar la arquitectura y el enlazado interno del sitio.",
+            "Desarrollar artículos orientados a preguntas reales de clientes.",
+            "Fortalecer la presencia local y el perfil de empresa en Google.",
+            "Crear contenido que aporte contexto, experiencia y autoridad temática.",
+            "Medir la evolución de visibilidad, tráfico y oportunidades."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ideal para: empresas que quieren reducir su dependencia exclusiva de la publicidad pagada y desarrollar una presencia orgánica más sólida."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Mejorar mi posicionamiento digital"
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "5.5. Desarrollo web y ecosistemas digitales"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Tu sitio web debe hacer más que verse bien."
+        },
+        {
+          "type": "paragraph",
+          "text": "Diseñamos y optimizamos sitios web que comunican con claridad, facilitan la navegación y ayudan a convertir el interés de los visitantes en acciones relevantes para el negocio."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podemos ayudarte a:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Crear páginas web corporativas.",
+            "Desarrollar landing pages orientadas a conversión.",
+            "Construir tiendas virtuales y experiencias de comercio electrónico.",
+            "Mejorar la estructura de navegación y la experiencia de usuario.",
+            "Optimizar el rendimiento y los fundamentos técnicos del sitio.",
+            "Integrar formularios, herramientas de analítica y sistemas comerciales.",
+            "Preparar la arquitectura del contenido para SEO y posicionamiento orgánico."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "El objetivo no es publicar una web y dar el proyecto por terminado. Es construir una herramienta digital coherente con tus objetivos y preparada para evolucionar con tu empresa."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ideal para: negocios que necesitan renovar su presencia digital, lanzar una solución comercial o mejorar el rendimiento de su sitio actual."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Evaluar mi proyecto web"
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "5.6. CRM y procesos comerciales"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Convierte la información de tus clientes en mejores oportunidades de seguimiento."
+        },
+        {
+          "type": "paragraph",
+          "text": "Un CRM bien implementado permite organizar contactos, registrar interacciones y comprender en qué etapa se encuentra cada oportunidad comercial."
+        },
+        {
+          "type": "paragraph",
+          "text": "Te ayudamos a evaluar y estructurar procesos comerciales para que la información no dependa exclusivamente de conversaciones dispersas, hojas de cálculo o la memoria de una persona."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podemos ayudarte a:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Organizar etapas y procesos comerciales.",
+            "Estructurar bases de contactos y oportunidades.",
+            "Definir criterios de seguimiento.",
+            "Integrar fuentes de captación cuando sea técnicamente viable.",
+            "Automatizar tareas administrativas y recordatorios.",
+            "Mejorar la trazabilidad entre marketing y ventas.",
+            "Diseñar indicadores para analizar el desempeño comercial."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "La herramienta importa, pero el proceso importa más. Implementar un CRM sin una lógica de trabajo clara puede trasladar el desorden de un lugar a otro."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ideal para: empresas que reciben oportunidades por distintos canales y necesitan organizarlas, hacerles seguimiento y comprender mejor su proceso comercial."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Organizar mi proceso comercial"
+        }
+      ]
+    },
+    "6": {
+      "label": "CASO DE ÉXITO — COLOR & DISEÑO",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Color & Diseño: convertir la visibilidad digital en oportunidades comerciales"
+        },
+        {
+          "type": "paragraph",
+          "text": "Una empresa puede tener una buena oferta, pero si sus clientes potenciales no la encuentran cuando buscan proveedores, materiales o soluciones, parte de su potencial comercial permanece oculto."
+        },
+        {
+          "type": "paragraph",
+          "text": "Con Color & Diseño hemos trabajado en el desarrollo y optimización de su presencia digital, combinando sitio web, SEO y contenido orientado a las preguntas e intenciones de búsqueda de sus audiencias."
+        },
+        {
+          "type": "paragraph",
+          "text": "El trabajo se ha distribuido en distintos canales para construir una presencia más coherente: sitio web, blog, Perfil de Empresa en Google, YouTube y redes sociales."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Resultados observados"
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "text": "55–75"
+        },
+        {
+          "type": "paragraph",
+          "text": "Clientes potenciales al mes"
+        },
+        {
+          "type": "paragraph",
+          "text": "Contactos orgánicos que llegan a la empresa a través de canales digitales, principalmente mediante WhatsApp, sin pagar publicidad para generar esos contactos."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "text": "4 de cada 10"
+        },
+        {
+          "type": "paragraph",
+          "text": "Visitas llegan desde artículos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Aproximadamente cuatro de cada diez visitas, según los datos compartidos, llegan al sitio a través de artículos relacionados con decisiones de compra, proveedores, precios y materiales."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "text": "+17 %"
+        },
+        {
+          "type": "paragraph",
+          "text": "Crecimiento en búsquedas donde aparece la empresa"
+        },
+        {
+          "type": "paragraph",
+          "text": "Crecimiento reportado en el indicador de búsquedas en las que la empresa aparece en resultados de búsqueda. Se han identificado 701 búsquedas distintas en las que aparece en la primera página, de acuerdo con los datos suministrados."
+        },
+        {
+          "type": "heading",
+          "level": 4,
+          "text": "+422 %"
+        },
+        {
+          "type": "paragraph",
+          "text": "Crecimiento del tráfico procedente de ChatGPT y Gemini"
+        },
+        {
+          "type": "paragraph",
+          "text": "Aumento reportado del tráfico que llega al sitio desde estas plataformas de inteligencia artificial."
+        },
+        {
+          "type": "paragraph",
+          "text": "El crecimiento del tráfico desde plataformas de IA no equivale, por sí solo, a una garantía de recomendación de marca en respuestas generadas por ellas."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "¿Qué hemos trabajado?"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Desarrollo y optimización del sitio web.",
+            "SEO on-page y mejora de contenidos.",
+            "Contenido enfocado en preguntas e intenciones de búsqueda.",
+            "Estrategia de posicionamiento orientada a SEO y GEO.",
+            "Distribución de contenido en blog, Perfil de Empresa en Google, YouTube y redes sociales."
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "¿Qué demuestra este caso?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Que la presencia digital puede construirse más allá de las publicaciones en redes sociales. Cuando el contenido responde a preguntas reales y está conectado con una oferta comercial clara, puede ayudar a que una empresa sea descubierta, evaluada y contactada por personas que buscan soluciones."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Quiero identificar oportunidades similares en mi empresa"
+        }
+      ]
+    },
+    "7": {
+      "label": "EXPERIENCIA EN DIFERENTES CONTEXTOS",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Estrategias digitales que parten de la realidad de cada negocio"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cada sector tiene diferentes audiencias, ciclos de decisión y necesidades de comunicación. Por eso, no aplicamos una fórmula idéntica a todos los proyectos."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Qualia Psicología"
+        },
+        {
+          "type": "paragraph",
+          "text": "Contenido, comunicación y captación de oportunidades"
+        },
+        {
+          "type": "paragraph",
+          "text": "Hemos trabajado en la creación de contenido audiovisual para distribución orgánica y campañas publicitarias, con énfasis en comunicar los diferenciadores de la marca, conectar con las audiencias y apoyar la generación de contactos."
+        },
+        {
+          "type": "paragraph",
+          "text": "También hemos trabajado contenido orientado a la visibilidad orgánica y la presencia digital en diferentes canales."
+        },
+        {
+          "type": "paragraph",
+          "text": "Enfoque: comunicar servicios especializados de forma comprensible, generar conexión con la audiencia y facilitar el contacto."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Bodyflex"
+        },
+        {
+          "type": "paragraph",
+          "text": "Experiencia de cliente: testimonio en video"
+        },
+        {
+          "type": "paragraph",
+          "text": "Conoce la experiencia compartida por Bodyflex sobre su trabajo con Alien Creativo."
+        },
+        {
+          "type": "video",
+          "url": "https://www.youtube.com/watch?v=cOqB9eyyPhs"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Arquitectura del Talento"
+        },
+        {
+          "type": "paragraph",
+          "text": "Experiencia de cliente: testimonio en video"
+        },
+        {
+          "type": "paragraph",
+          "text": "Conoce el testimonio de Arquitectura del Talento sobre su experiencia de trabajo con Alien Creativo."
+        },
+        {
+          "type": "video",
+          "url": "https://www.youtube.com/watch?v=GaHQojxlNJ8"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Kasana"
+        },
+        {
+          "type": "paragraph",
+          "text": "Experiencia de cliente: testimonio en video"
+        },
+        {
+          "type": "paragraph",
+          "text": "Conoce la experiencia compartida por Kasana."
+        },
+        {
+          "type": "video",
+          "url": "https://www.youtube.com/watch?v=ZgG4j1Kq_dk"
+        }
+      ]
+    },
+    "8": {
+      "label": "METODOLOGÍA DE TRABAJO",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "De la incertidumbre a un plan de acción"
+        },
+        {
+          "type": "paragraph",
+          "text": "No todas las empresas necesitan las mismas soluciones ni deben implementarlas al mismo tiempo. Nuestro proceso busca comprender el contexto, establecer prioridades y avanzar de forma ordenada."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "1. Entendemos tu negocio"
+        },
+        {
+          "type": "paragraph",
+          "text": "Conversamos sobre tus objetivos, clientes, servicios, procesos comerciales, herramientas actuales y principales dificultades."
+        },
+        {
+          "type": "paragraph",
+          "text": "Necesitamos comprender qué quieres conseguir y qué está limitando tu avance."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "2. Diagnosticamos oportunidades"
+        },
+        {
+          "type": "paragraph",
+          "text": "Revisamos los elementos digitales y operativos relevantes para identificar oportunidades, fricciones y posibles mejoras."
+        },
+        {
+          "type": "paragraph",
+          "text": "Distinguimos entre lo urgente, lo importante y aquello que todavía no necesita inversión."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "3. Priorizamos las soluciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "Definimos qué acciones tienen mayor sentido según tus objetivos, recursos, capacidades y situación actual."
+        },
+        {
+          "type": "paragraph",
+          "text": "No recomendamos implementar herramientas solo porque estén disponibles o sean tendencia."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "4. Diseñamos e implementamos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Desarrollamos las soluciones acordadas: desde ajustes estratégicos y acciones de marketing hasta integraciones, automatizaciones y mejoras tecnológicas."
+        },
+        {
+          "type": "paragraph",
+          "text": "El alcance depende de las necesidades identificadas y del plan definido para cada proyecto."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "5. Medimos, aprendemos y optimizamos"
+        },
+        {
+          "type": "paragraph",
+          "text": "Evaluamos los indicadores disponibles, revisamos los resultados y detectamos ajustes que puedan mejorar el desempeño."
+        },
+        {
+          "type": "paragraph",
+          "text": "El crecimiento requiere aprendizaje continuo. Medir permite tomar mejores decisiones, aunque no elimina la incertidumbre ni garantiza resultados comerciales específicos."
+        },
+        {
+          "type": "cta",
+          "role": "CTA",
+          "text": "Empezar con un Diagnóstico Digital"
+        }
+      ]
+    },
+    "9": {
+      "label": "TRANSPARENCIA Y DIFERENCIACIÓN",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "No necesitas que te prometan todo. Necesitas entender qué estás construyendo."
+        },
+        {
+          "type": "paragraph",
+          "text": "En el entorno digital abundan las promesas de ventas garantizadas, resultados inmediatos y automatizaciones capaces de resolver cualquier problema."
+        },
+        {
+          "type": "paragraph",
+          "text": "La realidad es más compleja: los resultados dependen de la oferta, el mercado, la inversión, la competencia, la experiencia del cliente, la operación comercial y otros factores."
+        },
+        {
+          "type": "paragraph",
+          "text": "Por eso, nuestra forma de trabajar parte de principios claros."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Primero, el negocio; después, la herramienta"
+        },
+        {
+          "type": "paragraph",
+          "text": "No toda empresa necesita un agente de IA, un CRM nuevo o una campaña publicitaria. La solución correcta depende del problema que se necesita resolver."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Medimos para tomar decisiones, no para decorar informes"
+        },
+        {
+          "type": "paragraph",
+          "text": "Los indicadores deben servir para comprender el desempeño y orientar acciones. Cuando los datos lo permiten, buscamos conectar las métricas digitales con las oportunidades y los resultados comerciales."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Integramos cuando existe una razón para hacerlo"
+        },
+        {
+          "type": "paragraph",
+          "text": "Una herramienta aislada puede ser útil. Sin embargo, cuando distintas soluciones necesitan intercambiar información, analizamos cómo conectarlas de manera coherente y viable."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Avanzamos por prioridades"
+        },
+        {
+          "type": "paragraph",
+          "text": "No siempre es necesario transformar toda la operación de una sola vez. Podemos identificar un punto de partida y construir progresivamente, según el alcance acordado."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Hablamos con claridad sobre las limitaciones"
+        },
+        {
+          "type": "paragraph",
+          "text": "La publicidad, el SEO, el GEO y la inteligencia artificial tienen variables que no controlamos por completo. No garantizamos posiciones específicas en buscadores, menciones en respuestas de IA ni ventas determinadas."
+        },
+        {
+          "type": "paragraph",
+          "text": "Sí podemos definir objetivos, implementar acciones, medir los indicadores disponibles y utilizar los aprendizajes para orientar las decisiones siguientes."
+        }
+      ]
+    },
+    "10": {
+      "label": "PREGUNTAS FRECUENTES",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Qué hace Alien Creativo?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Alien Creativo integra marketing digital, desarrollo web, posicionamiento orgánico, inteligencia artificial, automatización y procesos comerciales. Ayudamos a las empresas a identificar oportunidades de mejora y a implementar soluciones conectadas con sus objetivos de negocio."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Qué es un Diagnóstico Digital y para qué sirve?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Es una evaluación inicial de la situación digital y comercial de tu empresa. Permite identificar oportunidades, fricciones y prioridades para tomar decisiones más informadas antes de invertir en nuevas herramientas o acciones."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Qué servicios de marketing digital ofrecen en Medellín?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Trabajamos en estrategia de marketing digital, publicidad en Google Ads y Meta Ads, desarrollo web, SEO, GEO, contenido, analítica y soluciones relacionadas con la captación y el seguimiento comercial. El alcance se define según las necesidades de cada empresa."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Cómo puede ayudar la inteligencia artificial a mi empresa?"
+        },
+        {
+          "type": "paragraph",
+          "text": "La inteligencia artificial puede apoyar tareas como responder preguntas frecuentes, clasificar información, asistir procesos de atención, organizar datos y ejecutar flujos de trabajo automatizados. Su utilidad depende del proceso, la calidad de la información, las integraciones y el nivel de supervisión requerido."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Un agente de IA puede atender a mis clientes por WhatsApp?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Es posible implementar agentes de IA en flujos de atención por WhatsApp mediante las plataformas e integraciones compatibles. El alcance depende de la configuración, los permisos, las políticas aplicables, la complejidad de las consultas y las necesidades de intervención humana."
+        },
+        {
+          "type": "paragraph",
+          "text": "Antes de implementar una solución, evaluamos qué puede automatizarse, qué información necesita consultar y en qué situaciones debe transferir la conversación a una persona."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Qué es GEO y cómo puede ayudar a mi marca?"
+        },
+        {
+          "type": "paragraph",
+          "text": "GEO significa Generative Engine Optimization. Es un conjunto de prácticas orientadas a mejorar la claridad, relevancia y contexto de la información de una marca para sistemas de inteligencia artificial generativa."
+        },
+        {
+          "type": "paragraph",
+          "text": "Puede incluir contenido útil, información consistente sobre la empresa, estructura semántica y señales de autoridad. No existe una garantía de que una plataforma específica mencione o recomiende una marca, ya que sus respuestas dependen de múltiples factores."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Cuál es la diferencia entre SEO, GEO y AEO?"
+        },
+        {
+          "type": "list",
+          "items": [
+            "SEO: optimización para mejorar la visibilidad orgánica en motores de búsqueda.",
+            "GEO: optimización orientada a mejorar las posibilidades de que el contenido y la marca sean comprendidos y considerados por sistemas de IA generativa.",
+            "AEO: optimización de contenido para responder preguntas de forma directa y facilitar su comprensión por motores de respuesta y sistemas que presentan respuestas estructuradas."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Las tres disciplinas pueden complementarse, pero no son equivalentes ni garantizan posiciones o menciones específicas."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Cuánto cuesta contratar una agencia de marketing digital?"
+        },
+        {
+          "type": "paragraph",
+          "text": "El costo depende del alcance, los objetivos, los canales, la complejidad del proyecto y los recursos necesarios para ejecutarlo. No requiere la misma inversión una optimización SEO que una estrategia de generación de demanda o una integración de IA con varios sistemas."
+        },
+        {
+          "type": "paragraph",
+          "text": "Por eso, el primer paso recomendado es comprender las necesidades del negocio y definir un alcance coherente con las prioridades identificadas."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Tengo que contratar todos los servicios?"
+        },
+        {
+          "type": "paragraph",
+          "text": "No. Puedes comenzar por una necesidad concreta. El Diagnóstico Digital ayuda a establecer qué conviene abordar primero y si es necesario conectar esa solución con otras capacidades."
+        },
+        {
+          "type": "paragraph",
+          "text": "El objetivo no es acumular servicios, sino construir una solución que responda a tu situación."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Pueden garantizarme más ventas o un retorno específico de la inversión?"
+        },
+        {
+          "type": "paragraph",
+          "text": "No sería responsable garantizar una cifra de ventas, un ROAS determinado o una posición específica en buscadores sin controlar todas las variables que intervienen."
+        },
+        {
+          "type": "paragraph",
+          "text": "Podemos definir objetivos, establecer indicadores, implementar acciones y analizar su desempeño. La capacidad de atribuir resultados depende de la disponibilidad y calidad de los datos, así como del proceso comercial de la empresa."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Trabajan únicamente con empresas de Medellín?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Medellín es una ubicación prioritaria para nuestra presencia y estrategia local. También podemos evaluar proyectos de empresas ubicadas en otros municipios del Valle de Aburrá y trabajar de forma remota cuando el alcance lo permita."
+        },
+        {
+          "type": "paragraph",
+          "text": "Para necesidades locales específicas, contamos con la posibilidad de desarrollar páginas orientadas a municipios y zonas particulares."
+        },
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "¿Qué pasa si ya tengo un equipo de marketing o proveedores?"
+        },
+        {
+          "type": "paragraph",
+          "text": "No necesariamente tienes que reemplazarlos. Podemos evaluar cómo se relacionan los recursos actuales, detectar vacíos y determinar si hace falta complementar capacidades, mejorar procesos o conectar herramientas."
+        },
+        {
+          "type": "paragraph",
+          "text": "La recomendación depende de la situación real de la empresa."
+        }
+      ]
+    },
+    "11": {
+      "label": "CTA FINAL — Conversión",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "Crecer no consiste en hacer más. Consiste en saber qué hacer y por qué."
+        },
+        {
+          "type": "paragraph",
+          "text": "Si tu empresa ya está en marcha y quieres mejorar la captación de oportunidades, organizar tus procesos comerciales o aprovechar mejor la tecnología, el primer paso es entender dónde estás y hacia dónde quieres avanzar."
+        },
+        {
+          "type": "paragraph",
+          "text": "En Alien Creativo conectamos marketing, inteligencia artificial y procesos comerciales para ayudarte a construir una operación digital más coherente, medible y alineada con tus objetivos."
+        },
+        {
+          "type": "cta",
+          "role": "CTA principal",
+          "text": "Solicitar mi Diagnóstico Digital"
+        },
+        {
+          "type": "cta",
+          "role": "CTA secundario",
+          "text": "Hablar con Alien Creativo"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cuéntanos qué hace tu empresa, qué quieres mejorar y qué está dificultando tu crecimiento. Evaluaremos contigo cuáles podrían ser los siguientes pasos."
+        }
+      ]
+    },
+    "12": {
+      "label": "FOOTER — Información institucional",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 2,
+          "text": "ALIEN CREATIVO"
+        },
+        {
+          "type": "paragraph",
+          "text": "Marketing de Verdad."
+        },
+        {
+          "type": "paragraph",
+          "text": "Conectamos personas, procesos, marketing y tecnología para construir soluciones digitales alineadas con los objetivos de cada negocio."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Navegación"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Inicio",
+            "Diagnóstico Digital",
+            "Inteligencia Artificial y Automatización",
+            "Marketing Digital",
+            "SEO, GEO y AEO",
+            "Desarrollo Web",
+            "CRM y Procesos Comerciales",
+            "Casos y Experiencias",
+            "Blog",
+            "Contacto"
+          ]
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Contacto"
+        },
+        {
+          "type": "paragraph",
+          "text": "Correo: hola@aliencreativo.com"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ubicación principal: Medellín y Valle de Aburrá, Colombia."
+        },
+        {
+          "type": "paragraph",
+          "text": "Sitio web: [https://aliencreativo.com/](https://aliencreativo.com/)"
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Presencia local"
+        },
+        {
+          "type": "paragraph",
+          "text": "Medellín es nuestra ubicación prioritaria."
+        },
+        {
+          "type": "heading",
+          "level": 3,
+          "text": "Legal"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Política de tratamiento de datos personales",
+            "Política de privacidad",
+            "Política de cookies"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "© Alien Creativo. Todos los derechos reservados."
+        }
+      ]
+    }
+  }
+}
