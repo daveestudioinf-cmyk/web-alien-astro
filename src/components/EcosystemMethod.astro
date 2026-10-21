@@ -15,7 +15,7 @@ const outcome = content.groups[3].blocks.find(b => b.text?.startsWith('Resultado
       <div class="section-heading"><span class="eyebrow">Un ecosistema, no servicios aislados</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
       <div class="ecosystem-constellation" aria-hidden="true">
         <svg viewBox="0 0 320 300" fill="none"><circle cx="160" cy="150" r="108" /><circle cx="160" cy="150" r="64" /><path d="M160 42V258M52 150H268" stroke-dasharray="3 7" /></svg>
-        <img src="/assets/brand/alien-symbol.svg" alt="" width="46" height="65" loading="lazy" />
+        <img src="/assets/brand/v3/alien-symbol.svg" alt="" width="46" height="65" loading="lazy" />
         {content.groups.map((p,index)=>{const Icon=icons[index];return <span class={`constellation-point point-${index}`}><Icon size={20} strokeWidth={1.4}/><small>{p.title.replace(/^\d+\. /,'')}</small></span>;})}
       </div>
     </div>
