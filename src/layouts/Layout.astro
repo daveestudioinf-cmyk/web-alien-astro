@@ -8,6 +8,7 @@ const {
   description = 'Conectamos marketing, inteligencia artificial y procesos comerciales para ayudar a tu empresa a crecer con dirección.',
   canonical = 'https://aliencreativo.com/'
 } = Astro.props;
+const isPreviewBuild = import.meta.env.MODE === 'preview';
 const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizacion',label:'IA y automatización'}, {href:'#servicios',label:'Servicios'}, {href:'#casos',label:'Casos'}];
 ---
 <!doctype html>
@@ -19,6 +20,7 @@ const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizaci
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={isPreviewBuild ? 'noindex,follow' : 'index,follow'} />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
