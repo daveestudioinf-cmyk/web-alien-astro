@@ -15,6 +15,7 @@
     --color-text-subtle: #4e646d;
     --accent: #006c7c;
     --brand-coral: #d33547;
+    --brand-button-gradient: linear-gradient(to right, #f0505b 0%, #a9288d 100%);
   }
   .dark {
     --color-bg: #0b171e;
@@ -52,8 +53,8 @@
 .section-heading p, .section-copy { font-size: 16px; line-height: 1.8; color: var(--color-text-muted); max-width: 640px; }
 .accent-text { color: var(--accent); }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 24px; padding: 16px 23px; font-size: 13px; font-weight: 600; border: 1px solid var(--color-border); border-radius: 5px; transition: background .2s, color .2s, border-color .2s; min-height: 48px; text-align: center; }
-.button-primary { background: var(--brand-coral); border-color: var(--brand-coral); color: #fff9f6; }
-.button-primary:hover { background: #c83142; border-color: #c83142; }
+.button-primary { background: var(--brand-button-gradient); border-color: transparent; color: #fff; }
+.button-primary:hover { background: linear-gradient(to right, #dd4450 0%, #96227e 100%); border-color: transparent; }
 .button-secondary:hover { background: var(--color-surface-hover); border-color: var(--color-text-muted); }
 .text-link { display: inline-flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 500; padding-block: 10px; }
 .text-link:hover { color: var(--accent); }
@@ -135,7 +136,11 @@
 .case-scope ul { display: grid; gap: 12px; font-size: 13px; color: var(--color-text-muted); }
 .case-scope li { display: flex; gap: 10px; align-items: start; }
 .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.video-link { display: block; aspect-ratio: 16/10; overflow: hidden; background: var(--color-elevated); position: relative; border-radius: 5px; }
+.video-player { position: relative; aspect-ratio: 16/9; min-height: 200px; overflow: hidden; border-radius: 5px; background: var(--color-elevated); }
+.video-link { display: block; width: 100%; height: 100%; overflow: hidden; background: var(--color-elevated); position: absolute; inset: 0; border-radius: 5px; }
+.video-link[hidden] { display: none; }
+.video-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-player:has(:focus-visible) { outline: 2px solid var(--accent); outline-offset: 5px; }
 .video-link img { width: 100%; height: 100%; object-fit: cover; }
 .video-link::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent, #0e243388); }
 .video-play { position: absolute; z-index: 1; bottom: 18px; left: 18px; width: 44px; height: 44px; display: grid; place-items: center; background: #f1f5ef; color: #0e2433; border-radius: 50%; transition: transform .2s; }
@@ -577,3 +582,17 @@ main:focus { outline: none; }
  .case-metric strong { font-size: 40px; }
  .footer-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
 }
+
+/* Compact controls live below the embed, without covering YouTube's content. */
+.video-controls { display: flex; align-items: center; gap: 4px; padding-top: 6px; }
+.video-controls[hidden], .video-controls button[hidden] { display: none; }
+.video-controls button { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 4px; color: var(--color-text-muted); }
+.video-controls button:hover { color: var(--accent); background: var(--color-surface); }
+.video-controls [data-action="fullscreen"] { margin-left: auto; }
+.video-controls .control-play, .video-controls .control-muted { display: none; }
+.video-controls[data-paused="true"] .control-play, .video-controls [aria-pressed="true"] .control-muted { display: block; }
+.video-controls[data-paused="true"] .control-pause, .video-controls [aria-pressed="true"] .control-sound { display: none; }
+.video-shell:fullscreen { display: flex; flex-direction: column; background: #0b171e; color-scheme: dark; }
+.video-shell:fullscreen .video-player { flex: 1; aspect-ratio: auto; min-height: 0; border-radius: 0; }
+.video-shell:fullscreen .video-controls { padding: 6px max(16px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)); background: #0b171e; }
+.video-shell:fullscreen .video-controls button { color: #edf2ef; }
