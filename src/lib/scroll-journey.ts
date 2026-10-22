@@ -3,6 +3,7 @@ export function createPinnedScroll(stage: HTMLElement, count: number, select: (i
   const header = document.querySelector<HTMLElement>('.site-header');
   const controls = stage.querySelector<HTMLElement>(`.${prefix}-scroll-controls`)!;
   const position = stage.querySelector<HTMLElement>(`.${prefix}-scroll-position`)!;
+  const desktop = window.matchMedia('(min-width: 901px)');
   let enabled = false;
   let step = 0;
   let offset = 0;
@@ -51,8 +52,8 @@ export function createPinnedScroll(stage: HTMLElement, count: number, select: (i
     const progress = wasPinned ? relative / step : 0;
     offset = (header?.getBoundingClientRect().height ?? 88) + 12;
     const height = window.innerHeight - offset - 12;
-    // Very short or zoomed viewports retain normal controls in document flow.
-    enabled = height >= 440;
+    // Phones and tablets read in document flow, including after orientation changes.
+    enabled = desktop.matches && height >= 440;
     stage.classList.toggle('is-scroll-guided', enabled);
     controls.hidden = !enabled;
     if (!enabled) {
@@ -70,6 +71,7 @@ export function createPinnedScroll(stage: HTMLElement, count: number, select: (i
 
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', measure, { passive: true });
+  desktop.addEventListener('change', measure);
   // Changes above this section (accordions, fonts, images) must update its origin.
   new ResizeObserver(schedule).observe(document.body);
   if (header) new ResizeObserver(measure).observe(header);

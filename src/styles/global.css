@@ -209,6 +209,7 @@
 .service-tabs { display: grid; gap: 8px; }
 .service-tab { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 76px; padding: 16px 20px; border-radius: 12px; background: var(--selector-bg); text-align: left; color: var(--color-text-main); font-size: 16px; line-height: 1.45; }
 .service-tab > svg { flex-shrink: 0; color: var(--accent); }
+.service-tab > span { min-width: 0; overflow-wrap: anywhere; }
 .service-tab > svg:last-child { margin-left: auto; width: 16px; }
 .service-tab:hover { background: var(--color-surface-hover); }
 .service-tab[aria-selected="true"] { background: #0e2433; color: #fff; box-shadow: 0 12px 24px -16px #0e243380; }
@@ -221,6 +222,7 @@
 .service-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
 .service-top .number { display: none; }
 .service h3 { font-size: 28px; font-weight: 600; line-height: 1.25; margin-bottom: 16px; }
+.service-mobile-toggle { display: none; }
 .service-subtitle { font-size: 19px; color: var(--accent); line-height: 1.45; margin-bottom: 16px; font-weight: 500; }
 .service-detail { margin-block: 18px; padding-inline: 16px; background: var(--panel-soft); border-radius: 12px; }
 .service-detail summary { display: flex; justify-content: space-between; gap: 16px; align-items: center; min-height: 48px; list-style: none; font-size: 16px; color: var(--accent); font-weight: 500; }
@@ -229,7 +231,7 @@
 .service-detail[open] summary svg { transform: rotate(45deg); }
 .service-detail .client-copy { padding-block: 10px 16px; }
 .service-ideal { font-size: 16px; line-height: 1.65; color: var(--color-text-muted); }
-.service > .text-link { margin-top: 20px; }
+.service-body > .text-link { margin-top: 20px; }
 
 /* Native scroll traverses the service tabs while their frame stays in view. */
 .services-stage.is-scroll-guided .services-sticky { position: sticky; top: var(--services-sticky-top); height: var(--services-stage-height); display: flex; flex-direction: column; gap: 12px; }
@@ -248,13 +250,6 @@
 .services-scroll-position { font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 600; }
 .services-scroll-controls a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; max-width: calc(100% - 56px); margin-left: auto; margin-right: 56px; color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
 .services-scroll-controls a svg { flex-shrink: 0; }
-@media (max-width: 900px) {
-  .services-stage.is-scroll-guided .services-explorer { display: flex; flex-direction: column; gap: 12px; }
-  .services-stage.is-scroll-guided .service-tabs-window { flex-shrink: 0; max-height: 48%; padding: 4px; margin-inline: -4px; }
-  .services-stage.is-scroll-guided .service-tabs { margin-bottom: 0; }
-  .services-stage.is-scroll-guided .service-tab { font-size: 13px; padding: 10px; gap: 8px; }
-  .services-stage.is-scroll-guided .service-panels { flex: 1; }
-}
 @media (max-width: 700px) {
   .services-scroll-controls { gap: 0 12px; }
   .services-scroll-controls > span:nth-child(2) { flex: 1; font-size: 12px; }
@@ -417,7 +412,19 @@
   .services-explorer.is-enhanced { display: block; }
   .service-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 18px; }
   .service-tab { min-height: 76px; }
-  .services-intro { grid-template-columns: 1.3fr .8fr; }
+  .services-intro { grid-template-columns: 1fr; gap: 24px; }
+  .services-intro > .concept-photo { max-height: 220px; aspect-ratio: 2/1; border-radius: 16px; mask-image: none; }
+  .is-mobile .service { padding: 0; margin-bottom: 12px; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
+  .is-mobile .service-top, .is-mobile .service-desktop-title { display: none; }
+  .is-mobile .service h3 { font-size: 18px; line-height: 1.45; margin: 0; }
+  .is-mobile .service-mobile-toggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 64px; padding: 18px; border-radius: 12px; background: var(--selector-bg); color: var(--color-text-main); text-align: left; scroll-margin-top: 12px; }
+  .service-mobile-toggle > span { min-width: 0; overflow-wrap: anywhere; }
+  .service-mobile-toggle > svg { flex-shrink: 0; color: var(--accent); transition: transform 160ms var(--ease-out); }
+  .service-mobile-toggle[aria-expanded="true"] { background: var(--color-cyan-soft); }
+  .service-mobile-toggle[aria-expanded="true"] > svg { transform: rotate(45deg); }
+  .service-mobile-toggle:hover { background: var(--color-surface-hover); }
+  .is-mobile .service-body { padding: 20px 4px 28px; }
+  .is-mobile .service-subtitle { font-size: 20px; }
   .mission-journey { grid-template-columns: .65fr 1.35fr; gap: 28px; }
   .mission-step { gap: 18px; }
   .mission-step-title h3 { font-size: 22px; }
@@ -439,21 +446,19 @@
   .client-copy p + p { margin-top: 12px; }
   .client-copy li { margin-block: 6px; }
   .section-heading { margin-bottom: 24px; }
-  .hero-grid { grid-template-columns: 1fr; grid-template-areas: "heading" "actions" "art" "description" "note"; gap: 24px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 24px; }
   .hero-content { display: contents; }
-  .hero-heading { grid-area: heading; }
-  .hero-description { grid-area: description; }
   .hero-description > :first-child { margin-top: 0; }
-  .hero-note { grid-area: note; margin-top: 0; }
+  .hero-note { margin-top: 0; }
   .hero h1 { font-size: clamp(34px, 8.5vw, 46px); }
   .hero-copy { font-size: 16px; margin-top: 18px; }
   .hero-copy-secondary { margin-top: 12px; }
-  .hero-art { grid-area: art; width: 100%; }
+  .hero-art { width: 100%; }
   .hero-orbit-signature { width: min(400px, 100%); }
   .hero-topline { padding-top: 16px; }
   .hero-bottom { padding-block: 12px 20px; }
   .hero-bottom span { font-size: 13px; }
-  .hero-actions { grid-area: actions; gap: 6px 16px; margin-top: 0; }
+  .hero-actions { gap: 6px 16px; margin-top: 0; }
   .friction-row { --friction-inset: 18px; }
   .friction-row summary { min-height: 76px; gap: 16px; padding-block: 18px; }
   .friction-row h3 { font-size: 17px; }

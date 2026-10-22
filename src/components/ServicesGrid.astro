@@ -39,7 +39,13 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         const ideal=s.blocks.find(b=>b.text?.startsWith('Ideal para:'));
         return <article class="service" id={ids[index]} tabindex="0">
           <div class="service-top"><span class="number">0{index+1}</span><Icon class="quiet-icon" size={28} strokeWidth={1.3} aria-hidden="true" /></div>
-          <h3>{s.title.replace(/^5\.\d+\. /,'')}</h3>
+          <h3>
+            <span class="service-desktop-title">{s.title.replace(/^5\.\d+\. /,'')}</span>
+            <button class="service-mobile-toggle" type="button" id={`mobile-${ids[index]}`} aria-expanded="false" aria-controls={`body-${ids[index]}`}>
+              <span>{s.title.replace(/^5\.\d+\. /,'')}</span><Plus size={20} strokeWidth={1.5} aria-hidden="true" />
+            </button>
+          </h3>
+          <div class="service-body" id={`body-${ids[index]}`}>
           <h4 class="service-subtitle">{s.blocks[0].text}</h4>
           <ClientBlocks blocks={s.blocks.slice(1,firstDescription+1)} />
           <details class="service-detail">
@@ -48,6 +54,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
           </details>
           <p class="service-ideal">{ideal?.text}</p>
           <a class="text-link" href="#diagnostico">{cta(s.blocks)} <ArrowUpRight size={16} strokeWidth={1.5} /></a>
+          </div>
         </article>;
       })}
     </div>
@@ -72,6 +79,8 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
     const panelTrack = explorer.querySelector<HTMLElement>('.service-panel-track')!;
     const tabs = [...tablist.querySelectorAll<HTMLButtonElement>('.service-tab')];
     const panels = tabs.map(tab => document.getElementById(tab.dataset.panel!)!);
+    const bodies = panels.map(panel => panel.querySelector<HTMLElement>('.service-body')!);
+    const mobileToggles = panels.map(panel => panel.querySelector<HTMLButtonElement>('.service-mobile-toggle')!);
     const desktop = window.matchMedia('(min-width: 901px)');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const changes = new Set<Animation>();
@@ -86,29 +95,55 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
       changes.clear();
       tabs.forEach((tab, position) => {
         const selected = index === position;
-        tab.setAttribute('aria-selected', String(selected));
-        tab.tabIndex = selected ? 0 : -1;
-        panels[position].hidden = !selected;
+        if (desktop.matches) tab.setAttribute('aria-selected', String(selected));
+        else tab.removeAttribute('aria-selected');
+        tab.tabIndex = desktop.matches && selected ? 0 : -1;
+        panels[position].hidden = desktop.matches && !selected;
+        bodies[position].hidden = !desktop.matches && !selected;
+        mobileToggles[position].setAttribute('aria-expanded', String(selected));
       });
       activeIndex = index;
       alignTabs(index);
-      if (previous >= 0 && previous !== index && !reduced.matches && !focus && document.documentElement.dataset.input !== 'keyboard') {
+      if (desktop.matches && index >= 0 && previous >= 0 && previous !== index && !reduced.matches && !focus && document.documentElement.dataset.input !== 'keyboard') {
         const track = (animation: Animation) => {
           changes.add(animation);
           animation.finished.then(()=>changes.delete(animation),()=>changes.delete(animation));
         };
         track(panels[index].animate([{ opacity: .4, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 220, easing: 'cubic-bezier(.23,1,.32,1)' }));
       }
-      if (focus || (previous >= 0 && previous !== index && (panels[previous].contains(document.activeElement) || tabs.includes(document.activeElement as HTMLButtonElement)))) tabs[index].focus({ preventScroll: true });
+      if (index >= 0 && (focus || (previous >= 0 && previous !== index && (panels[previous].contains(document.activeElement) || tabs.includes(document.activeElement as HTMLButtonElement))))) {
+        (desktop.matches ? tabs[index] : mobileToggles[index]).focus({ preventScroll: true });
+      }
     }
     function alignTabs(index: number) {
+      if (index < 0 || !desktop.matches) {
+        tablist.style.removeProperty('transform');
+        return;
+      }
       const selectedTab = tabs[index].getBoundingClientRect();
       const tablistBox = tablist.getBoundingClientRect();
       const tabOffset = Math.min(Math.max(0, tablist.offsetHeight - tabWindow.clientHeight), Math.max(0, selectedTab.top - tablistBox.top - (tabWindow.clientHeight - selectedTab.height) / 2));
       tablist.style.transform = explorer.closest('.is-scroll-guided') ? `translateY(${-tabOffset}px)` : '';
     }
-    function syncOrientation() {
-      tablist.setAttribute('aria-orientation', desktop.matches ? 'vertical' : 'horizontal');
+    function syncLayout() {
+      const focusedIndex = panels.findIndex((panel, index) => panel.contains(document.activeElement) || tabs[index] === document.activeElement);
+      explorer!.classList.toggle('is-mobile', !desktop.matches);
+      tabWindow.hidden = !desktop.matches;
+      if (desktop.matches) {
+        tablist.setAttribute('role', 'tablist');
+        tablist.setAttribute('aria-orientation', 'vertical');
+      } else {
+        tablist.removeAttribute('role');
+        tablist.removeAttribute('aria-orientation');
+      }
+      panels.forEach((panel, index) => {
+        tabs[index].setAttribute('role', desktop.matches ? 'tab' : 'button');
+        panel.setAttribute('role', desktop.matches ? 'tabpanel' : 'region');
+        panel.setAttribute('aria-labelledby', desktop.matches ? tabs[index].id : mobileToggles[index].id);
+        panel.tabIndex = desktop.matches ? 0 : -1;
+      });
+      activate(desktop.matches && activeIndex < 0 ? 0 : activeIndex);
+      if (focusedIndex >= 0) (desktop.matches ? tabs[focusedIndex] : mobileToggles[focusedIndex]).focus({ preventScroll: true });
     }
     function fromHash(scroll = false) {
       const index = panels.findIndex(panel => `#${panel.id}` === window.location.hash);
@@ -122,7 +157,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         if (activeIndex !== index) activate(index);
         history.replaceState(null, '', `#${panels[index].id}`);
         if (journey.enabled) journey.goTo(index);
-        else panels[index].scrollIntoView({ block: 'start', behavior: 'instant' });
+        else (desktop.matches ? panels[index] : mobileToggles[index]).scrollIntoView({ block: 'start', behavior: 'instant' });
       });
     }
     tablist.setAttribute('role', 'tablist');
@@ -137,6 +172,17 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         // Replace the current fragment without jumping away from the selector.
         history.replaceState(null, '', `#${panels[index].id}`);
       });
+      mobileToggles[index].addEventListener('click', () => {
+        const next = activeIndex === index ? -1 : index;
+        activate(next);
+        history.replaceState(null, '', next >= 0 ? `#${panels[index].id}` : '#servicios');
+        // Closing an earlier answer can move this heading above the sticky header.
+        requestAnimationFrame(() => {
+          if (mobileToggles[index].getBoundingClientRect().top < document.querySelector('.site-header')!.getBoundingClientRect().bottom) {
+            mobileToggles[index].scrollIntoView({ block: 'start', behavior: 'instant' });
+          }
+        });
+      });
       tab.addEventListener('keydown', event => {
         let next: number | undefined;
         if (event.key === 'Home') next = 0;
@@ -150,8 +196,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         history.replaceState(null, '', `#${panels[next].id}`);
       });
     });
-    activate(0);
-    syncOrientation();
+    activate(desktop.matches ? 0 : -1);
     explorer.classList.add('is-enhanced');
     tablist.hidden = false;
     journey = createPinnedScroll(explorer.closest<HTMLElement>('.services-stage')!, tabs.length, index => {
@@ -173,6 +218,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
       panelTrack.style.transform = guided ? `translateY(${-offset}px)` : '';
       alignTabs(index);
     });
+    syncLayout();
     new ResizeObserver(() => journey.refresh()).observe(panelTrack);
     panelWindow.addEventListener('focusin', event => {
       if (!journey.enabled || panels.includes(event.target as HTMLElement)) return;
@@ -186,7 +232,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
       journey.goTo(activeIndex, Math.max(0, Math.min(1, (offset + distance) / overflow)));
     });
     fromHash(true);
-    desktop.addEventListener('change', syncOrientation);
+    desktop.addEventListener('change', syncLayout);
     reduced.addEventListener('change', () => { if (reduced.matches) changes.forEach(animation => animation.cancel()); });
     window.addEventListener('hashchange', () => fromHash(true));
     // Reveal before native anchor scrolling, including clicks on the current hash.
