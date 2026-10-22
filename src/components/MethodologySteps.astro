@@ -21,7 +21,7 @@ const icons=[MessagesSquare,ScanLine,ListOrdered,Workflow,ChartNoAxesCombined];
             <circle cx="44" cy="280" r="4" /><circle cx="210" cy="310" r="4" /><circle cx="355" cy="102" r="4" />
           </svg>
           <img class="mission-alien mission-metallic-illustration" src="/assets/brand/v3/alien-mission.webp" alt="" width="1024" height="1024" loading="lazy" />
-          <img class="mission-signature" src="/assets/brand/v3/alien-symbol.svg" alt="" width="30" height="42" loading="lazy" />
+          <img class="mission-signature" src="/assets/brand/alien-symbol.svg" alt="" width="30" height="42" loading="lazy" />
         </div>
         <div class="mission-caption"><span>Alien Creativo</span><span>01 — 05</span></div>
         <p>Marketing de Verdad.</p>
@@ -54,6 +54,7 @@ const icons=[MessagesSquare,ScanLine,ListOrdered,Workflow,ChartNoAxesCombined];
       const travel=Math.min(distance,Math.max(0,innerHeight*.52-listTop-centers[0]));
       rail.style.top=`${centers[0]}px`;
       rail.style.height=`${distance}px`;
+      // This is a direct scroll indicator, without autonomous motion or easing.
       progress.style.transform=`scaleY(${distance?travel/distance:0})`;
       vessel.style.transform=`translate(-50%, ${travel}px)`;
       let active=0;
@@ -66,6 +67,7 @@ const icons=[MessagesSquare,ScanLine,ListOrdered,Workflow,ChartNoAxesCombined];
     function schedule(){if(!scheduled&&visible){scheduled=true;requestAnimationFrame(update);}}
     new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)schedule();},{rootMargin:'150px'}).observe(journey);
     new ResizeObserver(schedule).observe(list);
+    new ResizeObserver(schedule).observe(document.body);
     window.addEventListener('scroll',schedule,{passive:true});
     window.addEventListener('resize',schedule,{passive:true});
     document.fonts.ready.then(schedule);

@@ -1,6 +1,6 @@
 ---
 import SectionMarker from './SectionMarker.astro';
-import { ArrowUpRight } from 'lucide-astro';
+import { ArrowUpRight, Plus } from 'lucide-astro';
 import { copy, groups, cta } from '../lib/home';
 import ClientBlocks from './ClientBlocks.astro';
 const blocks = copy(2);
@@ -13,7 +13,10 @@ const closing = content.groups[4].blocks.filter(b=>b.type==='paragraph').at(-1);
   <div class="container">
     <div class="section-heading"><span class="eyebrow">Identificación del problema</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
     <div class="friction-list">
-      {frictions.map((f,index) => <article class="friction-row"><span class="number">0{index+1}</span><h3>{f.title}</h3><ClientBlocks blocks={f.blocks} /></article>)}
+      {frictions.map((f,index) => <details class="friction-row" open={index===0}>
+        <summary><h3>{f.title}</h3><Plus size={20} aria-hidden="true" /></summary>
+        <ClientBlocks blocks={f.blocks} />
+      </details>)}
     </div>
     <div class="inline-callout"><p>{closing?.text}</p><a class="text-link" href="#diagnostico">{cta(blocks)} <ArrowUpRight size={17} /></a></div>
   </div>

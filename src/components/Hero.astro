@@ -9,11 +9,15 @@ const paragraphs = blocks.filter(b => b.type === 'paragraph');
   <div class="container">
     <div class="hero-topline"><span>Alien Creativo · Marketing de Verdad.</span><span>Medellín y Valle de Aburrá, Colombia</span></div>
     <div class="hero-grid">
-      <div>
+      <div class="hero-content">
+        <div class="hero-heading">
         <p class="eyebrow">Marketing · Tecnología · Procesos comerciales</p>
         <h1>Marketing, tecnología y procesos comerciales para <span>crecer con dirección.</span></h1>
+        </div>
+        <div class="hero-description">
         <p class="hero-copy">{paragraphs[0].text}</p>
         <p class="hero-copy hero-copy-secondary">{paragraphs[1].text}</p>
+        </div>
         <div class="hero-actions">
           <a class="button button-primary" href="#diagnostico">{cta(blocks, 'CTA principal')} <ArrowUpRight size={17} strokeWidth={1.6} /></a>
           <a class="text-link" href="#ia-automatizacion">{cta(blocks, 'CTA secundario')} <ArrowDown size={15} strokeWidth={1.6} /></a>
@@ -21,14 +25,16 @@ const paragraphs = blocks.filter(b => b.type === 'paragraph');
         <p class="hero-note">{paragraphs[2].text}</p>
       </div>
       <div class="hero-art">
-        <HeroOrbits />
-        <img class="hero-sculpture hero-metallic-illustration" src="/assets/brand/v3/alien-hero.webp" alt="Alien cromado con una órbita y reflejos lavanda y rosa" width="1024" height="1024" fetchpriority="high" />
+        <div class="hero-orbit-signature">
+          <HeroOrbits />
+          <img class="hero-sculpture hero-metallic-illustration" src="/assets/brand/v3/alien-hero.webp" alt="Alien cromado con una órbita y reflejos lavanda y rosa" width="1024" height="1024" fetchpriority="high" />
+        </div>
       </div>
     </div>
     <div class="hero-bottom">
       <span><MapPin size={13} strokeWidth={1.5} /> Medellín y Valle de Aburrá, Colombia</span>
       <span><Orbit size={14} strokeWidth={1.5} /> Personas, procesos, tecnología y datos</span>
-      <a class="text-link" style="padding:0;font-size:11px" href="#casos">Casos y experiencias <ArrowDown size={13} /></a>
+      <a class="text-link" href="#casos">Casos y experiencias <ArrowDown size={13} /></a>
     </div>
   </div>
 </section>

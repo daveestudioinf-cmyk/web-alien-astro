@@ -1,6 +1,6 @@
 ---
 import SectionMarker from './SectionMarker.astro';
-import { ArrowUpRight } from 'lucide-astro';
+import { ArrowUpRight, UsersRound, FileText, Search, Sparkles } from 'lucide-astro';
 import { copy, groups, cta } from '../lib/home';
 import ClientBlocks from './ClientBlocks.astro';
 import CaseShowcase from './CaseShowcase.astro';
@@ -8,6 +8,7 @@ const blocks=copy(6);
 const content=groups(blocks.slice(1),3);
 const metrics=groups(content.groups[0].blocks,4).groups;
 const caution=metrics[3].blocks.at(-1);
+const metricIcons=[UsersRound,FileText,Search,Sparkles];
 ---
 <section id="casos" class="section surface">
   <SectionMarker index="05" />
@@ -15,9 +16,37 @@ const caution=metrics[3].blocks.at(-1);
     <div class="section-heading"><span class="eyebrow">Caso de éxito · Color & Diseño</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
     <CaseShowcase />
     <h3 class="subsection-title">{content.groups[0].title}</h3>
-    <div class="case-metrics">{metrics.map((m,index)=><article class="case-metric"><strong>{m.title}</strong><h3>{m.blocks[0].text}</h3><ClientBlocks blocks={m.blocks.slice(1).filter(b=>b!==caution||index!==3)} /></article>)}</div>
+    <div class="case-metrics">{metrics.map((m,index)=>{const Icon=metricIcons[index];return <article class="case-metric"><div class="case-metric-top"><strong class:list={{'metric-value-long':index===1}}>{m.title}</strong><span class="case-metric-icon" aria-hidden="true"><Icon size={24} strokeWidth={1.5}/></span></div><h3>{m.blocks[0].text}</h3><ClientBlocks blocks={m.blocks.slice(1).filter(b=>b!==caution||index!==3)} /></article>;})}</div>
     <ClientBlocks blocks={caution?[caution]:[]} />
     <div class="case-scope">{content.groups.slice(1).map(group=><div><h3 class="subsection-title">{group.title}</h3><ClientBlocks blocks={group.blocks} /></div>)}</div>
     <a class="button button-primary" style="margin-top:32px" href="#diagnostico">{cta(blocks)} <ArrowUpRight size={17} /></a>
   </div>
 </section>
+
+<script>
+  const preference = matchMedia('(prefers-reduced-motion: reduce)');
+  const running = new Set<Animation>();
+  const observer = new IntersectionObserver(entries => {
+    let index = 0;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      observer.unobserve(entry.target);
+      if (preference.matches || document.documentElement.dataset.input === 'keyboard') continue;
+      const delay = index++ * 90;
+      const elements = [entry.target, entry.target.querySelector('strong')];
+      elements.forEach((element, part) => {
+        if (!element) return;
+        const animation = element.animate([
+          { opacity: part ? .3 : .65, transform: `translateY(${part ? 12 : 20}px)` },
+          { opacity: 1, transform: 'translateY(0)' }
+        ], { duration: part ? 700 : 560, delay, fill: 'backwards', easing: 'cubic-bezier(.23,1,.32,1)' });
+        running.add(animation);
+        animation.finished.then(()=>running.delete(animation),()=>running.delete(animation));
+      });
+    }
+  }, { threshold: .12 });
+  document.querySelectorAll('.case-metric').forEach(card => observer.observe(card));
+  preference.addEventListener('change', () => {
+    if (preference.matches) running.forEach(animation => animation.cancel());
+  });
+</script>

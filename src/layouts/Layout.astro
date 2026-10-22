@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import PageInteractions from '../components/PageInteractions.astro';
+import { enableThemeToggle } from '../lib/site-config';
 import { Sun, Moon, Menu, ArrowUpRight, MessageCircle } from 'lucide-astro';
 interface Props { title?: string; description?: string; canonical?: string; }
 const {
@@ -12,11 +13,11 @@ const isPreviewBuild = import.meta.env.MODE === 'preview';
 const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizacion',label:'IA y automatización'}, {href:'#servicios',label:'Servicios'}, {href:'#casos',label:'Casos'}];
 ---
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme-toggle-enabled={String(enableThemeToggle)}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/assets/brand/v3/alien-symbol.svg" />
+    <link rel="icon" type="image/svg+xml" href="/assets/brand/alien-symbol.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -28,12 +29,14 @@ const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizaci
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Alien Creativo" />
     <meta property="og:locale" content="es_CO" />
-    <meta name="theme-color" content="#faf9fc" />
+    <meta name="theme-color" content="#fcfbff" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script is:inline>
-      try { document.documentElement.classList.toggle('dark', localStorage.getItem('theme-v3') === 'dark'); } catch {}
+      if (document.documentElement.dataset.themeToggleEnabled === 'true') {
+        try { document.documentElement.classList.toggle('dark', localStorage.getItem('theme-v3') === 'dark'); } catch {}
+      }
     </script>
   </head>
   <body>
@@ -41,12 +44,12 @@ const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizaci
     <header class="site-header">
       <div class="container header-inner">
         <a href="/" aria-label="Alien Creativo, inicio">
-          <img class="brand-logo logo-light" src="/assets/brand/v3/logo-alien-creativo.svg" alt="Alien Creativo" width="178" height="56" />
-          <img class="brand-logo logo-dark" src="/assets/brand/v3/logo-alien-creativo-light.svg" alt="Alien Creativo" width="178" height="56" />
+          <img class="brand-logo logo-light" src="/assets/images/logo-alien-creativo.svg" alt="Alien Creativo" width="178" height="56" />
+          <img class="brand-logo logo-dark" src="/assets/images/logo-alien-creativo-light.svg" alt="Alien Creativo" width="178" height="56" />
         </a>
         <nav class="desktop-nav" aria-label="Navegación principal">{nav.map(item => <a href={item.href}>{item.label}</a>)}</nav>
         <div class="header-actions">
-          <button id="theme-toggle" class="icon-button" aria-label="Cambiar a tema oscuro"><Sun class="theme-sun" size={16} strokeWidth={1.5} /><Moon class="theme-moon" size={16} strokeWidth={1.5} /></button>
+          {enableThemeToggle && <button id="theme-toggle" class="icon-button" aria-label="Cambiar a tema oscuro"><Sun class="theme-sun" size={16} strokeWidth={1.5} /><Moon class="theme-moon" size={16} strokeWidth={1.5} /></button>}
           <a class="button button-primary" href="#diagnostico">Solicitar mi Diagnóstico Digital <ArrowUpRight size={15} /></a>
           <details class="mobile-menu">
             <summary class="icon-button" aria-label="Abrir menú de navegación"><Menu size={19} strokeWidth={1.5} /></summary>
@@ -62,8 +65,8 @@ const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizaci
         <div class="footer-grid">
           <div class="footer-brand">
             <a href="/" aria-label="Alien Creativo, inicio">
-              <img class="brand-logo logo-light" src="/assets/brand/v3/logo-alien-creativo.svg" alt="Alien Creativo" width="178" height="56" loading="lazy" />
-              <img class="brand-logo logo-dark" src="/assets/brand/v3/logo-alien-creativo-light.svg" alt="Alien Creativo" width="178" height="56" loading="lazy" />
+              <img class="brand-logo logo-light" src="/assets/images/logo-alien-creativo.svg" alt="Alien Creativo" width="178" height="56" loading="lazy" />
+              <img class="brand-logo logo-dark" src="/assets/images/logo-alien-creativo-light.svg" alt="Alien Creativo" width="178" height="56" loading="lazy" />
             </a>
             <p>Marketing de Verdad.</p>
             <p>Conectamos personas, procesos, marketing y tecnología para construir soluciones digitales alineadas con los objetivos de cada negocio.</p>
@@ -81,7 +84,7 @@ const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizaci
       function syncTheme() {
         const dark=document.documentElement.classList.contains('dark');
         toggle?.setAttribute('aria-label',dark?'Cambiar a tema claro':'Cambiar a tema oscuro');
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#211c30':'#faf9fc');
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#101e2c':'#fcfbff');
       }
       syncTheme();
       toggle?.addEventListener('click', () => {

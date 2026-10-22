@@ -1,6 +1,6 @@
 ---
 import SectionMarker from './SectionMarker.astro';
-import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-astro';
+import { Play, Pause, Volume2, VolumeX, Maximize, ArrowLeft, ArrowRight } from 'lucide-astro';
 import { copy, groups } from '../lib/home';
 import ClientBlocks from './ClientBlocks.astro';
 const blocks=copy(7);
@@ -13,7 +13,7 @@ const videos=content.groups.slice(1);
   <div class="container">
     <div class="section-heading"><span class="eyebrow">Experiencia en diferentes contextos</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
     <article class="qualia-case"><h3>{qualia.title}</h3><ClientBlocks blocks={qualia.blocks} /></article>
-    <div class="testimonial-grid">
+    <div class="testimonial-grid" id="testimonial-track" aria-label="Testimonios de clientes">
       {videos.map(v=>{const url=v.blocks.find(b=>b.type==='video')?.url!; const videoId=new URL(url).searchParams.get('v');return <article class="testimonial">
         <div class="video-shell">
         <div class="video-player" data-video-id={videoId} data-video-title={v.title}>
@@ -27,6 +27,11 @@ const videos=content.groups.slice(1);
         </div>
         <h3>{v.title}</h3><ClientBlocks blocks={v.blocks} />
       </article>;})}
+    </div>
+    <div class="testimonial-pagination" hidden>
+      <button class="icon-button" type="button" data-testimonial-prev aria-label="Testimonio anterior" aria-controls="testimonial-track"><ArrowLeft size={20} aria-hidden="true" /></button>
+      <span class="testimonial-position" aria-live="polite" aria-atomic="true">1 de {videos.length}</span>
+      <button class="icon-button" type="button" data-testimonial-next aria-label="Testimonio siguiente" aria-controls="testimonial-track"><ArrowRight size={20} aria-hidden="true" /></button>
     </div>
   </div>
 </section>
@@ -106,6 +111,7 @@ const videos=content.groups.slice(1);
           onReady:({target})=>{
             if(!iframe.isConnected)return;
             instances.set(player,target);controls.hidden=false;sync(target);
+            if(player.closest<HTMLElement>('.testimonial')?.inert) target.pauseVideo();
             if(event.detail===0&&(document.activeElement===button||document.activeElement===document.body))play.focus({preventScroll:true});
           },
           onStateChange:({target})=>{if(iframe.isConnected)sync(target);}
@@ -116,4 +122,71 @@ const videos=content.groups.slice(1);
       }
     });
   });
+
+  const track=document.getElementById('testimonial-track');
+  const pagination=document.querySelector<HTMLElement>('.testimonial-pagination');
+  if(track && pagination){
+    const slides=[...track.querySelectorAll<HTMLElement>('.testimonial')];
+    const previous=pagination.querySelector<HTMLButtonElement>('[data-testimonial-prev]')!;
+    const next=pagination.querySelector<HTMLButtonElement>('[data-testimonial-next]')!;
+    const position=pagination.querySelector<HTMLElement>('.testimonial-position')!;
+    const mobile=window.matchMedia('(max-width: 700px)');
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+    let current=0, scheduled=false;
+    function pauseSlide(slide: HTMLElement){
+      const player=slide.querySelector<HTMLElement>('.video-player')!;
+      const api=instances.get(player);
+      if(api){
+        api.pauseVideo();
+        const controls=player.closest('.video-shell')!.querySelector<HTMLElement>('.video-controls')!;
+        controls.dataset.paused='true';
+        controls.querySelector('[data-action="play"]')?.setAttribute('aria-label','Reproducir video');
+      }
+      else player.querySelector('iframe')?.contentWindow?.postMessage(JSON.stringify({event:'command',func:'pauseVideo',args:[]}), 'https://www.youtube-nocookie.com');
+    }
+    function update(index: number){
+      if(index!==current && mobile.matches) pauseSlide(slides[current]);
+      current=index;
+      previous.disabled=current===0;
+      next.disabled=current===slides.length-1;
+      position.textContent=`${current+1} de ${slides.length}`;
+      slides.forEach((slide,i)=>{
+        slide.inert=mobile.matches && i!==current;
+        if(mobile.matches){
+          slide.setAttribute('role','group');
+          slide.setAttribute('aria-roledescription','diapositiva');
+          slide.setAttribute('aria-label',`${i+1} de ${slides.length}`);
+        }else{
+          slide.removeAttribute('role');slide.removeAttribute('aria-roledescription');slide.removeAttribute('aria-label');
+        }
+      });
+    }
+    function go(index: number){
+      const bounded=Math.max(0,Math.min(slides.length-1,index));
+      track!.scrollTo({left:slides[bounded].offsetLeft-slides[0].offsetLeft,behavior:reduced.matches?'instant':'smooth'});
+    }
+    function syncLayout(){
+      pagination!.hidden=!mobile.matches;
+      track!.classList.toggle('is-carousel',mobile.matches);
+      if(mobile.matches){track!.setAttribute('role','region');track!.setAttribute('aria-roledescription','carrusel');}
+      else{track!.removeAttribute('role');track!.removeAttribute('aria-roledescription');}
+      update(current);
+      track!.scrollTo({left:mobile.matches?slides[current].offsetLeft-slides[0].offsetLeft:0,behavior:'instant'});
+    }
+    previous.addEventListener('click',()=>go(current-1));
+    next.addEventListener('click',()=>go(current+1));
+    track.addEventListener('scroll',()=>{
+      if(scheduled || !mobile.matches)return;
+      scheduled=true;
+      requestAnimationFrame(()=>{
+        scheduled=false;
+        const left=track!.scrollLeft;
+        const distances=slides.map(slide=>Math.abs(slide.offsetLeft-slides[0].offsetLeft-left));
+        update(distances.indexOf(Math.min(...distances)));
+      });
+    },{passive:true});
+    mobile.addEventListener('change',syncLayout);
+    new ResizeObserver(syncLayout).observe(track);
+    syncLayout();
+  }
 </script>

@@ -3,6 +3,7 @@ import SectionMarker from './SectionMarker.astro';
 import { ArrowUpRight, ScanLine, Workflow, Megaphone, Search, PanelsTopLeft, ContactRound, Plus } from 'lucide-astro';
 import { copy, groups, cta } from '../lib/home';
 import ClientBlocks from './ClientBlocks.astro';
+import ConceptPhoto from './ConceptPhoto.astro';
 const blocks=copy(5);
 const content=groups(blocks.slice(1),2);
 const icons=[ScanLine,Workflow,Megaphone,Search,PanelsTopLeft,ContactRound];
@@ -13,14 +14,25 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
   <div class="container">
     <div class="brand-section-intro services-intro">
       <div class="section-heading"><span class="eyebrow">Soluciones conectadas con necesidades reales</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
-      <div class="brand-service-art" aria-hidden="true"><span class="brand-art-ring"></span><img src="/assets/brand/v3/alien-services.webp" alt="" width="1024" height="1024" loading="lazy" /></div>
+      <ConceptPhoto scene="automation" alt="Escena conceptual de profesionales trabajando con herramientas de automatización" />
     </div>
-    <div class="services-grid">
+    <div class="services-explorer">
+      <div class="service-tabs" aria-label="Soluciones digitales" hidden>
+        {content.groups.map((s,index)=>{
+          const Icon=icons[index];
+          return <button type="button" class="service-tab" id={`tab-${ids[index]}`} data-panel={ids[index]}>
+            <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
+            <span>{s.title.replace(/^5\.\d+\. /,'')}</span>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </button>;
+        })}
+      </div>
+    <div class="service-panels">
       {content.groups.map((s,index)=>{
         const Icon=icons[index];
         const firstDescription=s.blocks.findIndex(b=>b.type==='paragraph');
         const ideal=s.blocks.find(b=>b.text?.startsWith('Ideal para:'));
-        return <article class="service" id={ids[index]}>
+        return <article class="service" id={ids[index]} tabindex="0">
           <div class="service-top"><span class="number">0{index+1}</span><Icon class="quiet-icon" size={28} strokeWidth={1.3} aria-hidden="true" /></div>
           <h3>{s.title.replace(/^5\.\d+\. /,'')}</h3>
           <h4 class="service-subtitle">{s.blocks[0].text}</h4>
@@ -34,5 +46,88 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         </article>;
       })}
     </div>
+    </div>
   </div>
 </section>
+<script>
+  const explorer = document.querySelector<HTMLElement>('.services-explorer');
+  if (explorer) {
+    const tablist = explorer.querySelector<HTMLElement>('.service-tabs')!;
+    const tabs = [...tablist.querySelectorAll<HTMLButtonElement>('.service-tab')];
+    const panels = tabs.map(tab => document.getElementById(tab.dataset.panel!)!);
+    const desktop = window.matchMedia('(min-width: 901px)');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const changes = new Set<Animation>();
+    let activeIndex = -1;
+    function activate(index: number, focus = false) {
+      const previous = activeIndex;
+      changes.forEach(animation => animation.cancel());
+      changes.clear();
+      tabs.forEach((tab, position) => {
+        const selected = index === position;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        panels[position].hidden = !selected;
+      });
+      activeIndex = index;
+      if (previous >= 0 && previous !== index && !reduced.matches && !focus && document.documentElement.dataset.input !== 'keyboard') {
+        const track = (animation: Animation) => {
+          changes.add(animation);
+          animation.finished.then(()=>changes.delete(animation),()=>changes.delete(animation));
+        };
+        track(panels[index].animate([{ opacity: .4, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 220, easing: 'cubic-bezier(.23,1,.32,1)' }));
+      }
+      if (focus) tabs[index].focus({ preventScroll: true });
+    }
+    function syncOrientation() {
+      tablist.setAttribute('aria-orientation', desktop.matches ? 'vertical' : 'horizontal');
+    }
+    function fromHash(scroll = false) {
+      const index = panels.findIndex(panel => `#${panel.id}` === window.location.hash);
+      if (index < 0) return;
+      activate(index);
+      if (scroll) requestAnimationFrame(() => panels[index].scrollIntoView({ block: 'start', behavior: 'instant' }));
+    }
+    tablist.setAttribute('role', 'tablist');
+    tabs.forEach((tab, index) => {
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-controls', panels[index].id);
+      panels[index].setAttribute('role', 'tabpanel');
+      panels[index].setAttribute('aria-labelledby', tab.id);
+      tab.addEventListener('click', () => {
+        activate(index);
+        // Replace the current fragment without jumping away from the selector.
+        history.replaceState(null, '', `#${panels[index].id}`);
+      });
+      tab.addEventListener('keydown', event => {
+        let next: number | undefined;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabs.length - 1;
+        if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
+        if (next === undefined) return;
+        event.preventDefault();
+        activate(next, true);
+        history.replaceState(null, '', `#${panels[next].id}`);
+      });
+    });
+    activate(0);
+    syncOrientation();
+    explorer.classList.add('is-enhanced');
+    tablist.hidden = false;
+    fromHash(true);
+    desktop.addEventListener('change', syncOrientation);
+    reduced.addEventListener('change', () => { if (reduced.matches) changes.forEach(animation => animation.cancel()); });
+    window.addEventListener('hashchange', () => fromHash(true));
+    // Reveal before native anchor scrolling, including clicks on the current hash.
+    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', () => {
+        const index = panels.findIndex(panel => `#${panel.id}` === link.getAttribute('href'));
+        if (index >= 0) {
+          activate(index);
+          requestAnimationFrame(() => panels[index].scrollIntoView({ block: 'start', behavior: 'instant' }));
+        }
+      });
+    });
+  }
+</script>
