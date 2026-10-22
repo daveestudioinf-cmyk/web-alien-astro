@@ -26,3 +26,5 @@ pnpm-debug.log*
 # test & browser artifacts
 .playwright-cli/
 .review/
+# Local AI runtime state
+.atl/

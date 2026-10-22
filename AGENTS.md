@@ -1,5 +1,7 @@
 ## Development
 
+Use pnpm for package management and project scripts. Do not use npm. npx is allowed.
+
 When starting the dev server, use background mode:
 
 ```
