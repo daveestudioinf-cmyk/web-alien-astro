@@ -12,12 +12,91 @@ const closing = content.groups[4].blocks.filter(b=>b.type==='paragraph').at(-1);
   <SectionMarker index="01" />
   <div class="container">
     <div class="section-heading"><span class="eyebrow">Identificación del problema</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
+    <div class="frictions-stage">
+    <div class="frictions-sticky">
+    <div class="frictions-window">
     <div class="friction-list">
       {frictions.map((f,index) => <details class="friction-row" open={index===0}>
         <summary><h3>{f.title}</h3><Plus size={20} aria-hidden="true" /></summary>
         <ClientBlocks blocks={f.blocks} />
       </details>)}
     </div>
+    </div>
+    <div class="services-scroll-controls frictions-scroll-controls" hidden>
+      <span class="services-scroll-position frictions-scroll-position" aria-label="Problema actual">01 / 05</span>
+      <span>Desplázate para explorar los problemas</span>
+      <a href="#diagnostico">Continuar al diagnóstico <ArrowUpRight size={15} aria-hidden="true" /></a>
+    </div>
+    </div>
+    </div>
     <div class="inline-callout"><p>{closing?.text}</p><a class="text-link" href="#diagnostico">{cta(blocks)} <ArrowUpRight size={17} /></a></div>
   </div>
 </section>
+
+<script>
+  import { createPinnedScroll } from '../lib/scroll-journey';
+  const stage = document.querySelector<HTMLElement>('.frictions-stage');
+  if (stage) {
+    const list = stage.querySelector<HTMLElement>('.friction-list')!;
+    const viewport = stage.querySelector<HTMLElement>('.frictions-window')!;
+    const rows = [...list.querySelectorAll<HTMLDetailsElement>('.friction-row')];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const entrances = new Set<Animation>();
+    let current = 0;
+
+    function highlight(index: number) {
+      rows.forEach((row, i) => {
+        const active = i === index && row.open;
+        row.dataset.active = String(active);
+        const summary = row.querySelector('summary')!;
+        if (active) summary.setAttribute('aria-current', 'step');
+        else summary.removeAttribute('aria-current');
+      });
+    }
+
+    function select(index: number) {
+      const previous = rows[current];
+      const moveFocus = previous !== rows[index] && previous.contains(document.activeElement);
+      entrances.forEach(animation => animation.cancel());
+      rows.forEach((row, i) => { row.open = i === index; });
+      current = index;
+      highlight(index);
+      if (moveFocus) rows[index].querySelector('summary')!.focus({ preventScroll: true });
+      if (reduced.matches || document.documentElement.dataset.input === 'keyboard') return;
+      const body = rows[index].querySelector('.client-copy')!;
+      const animation = body.animate([{ opacity: .4, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240, easing: 'cubic-bezier(.23,1,.32,1)' });
+      entrances.add(animation);
+      animation.finished.then(()=>entrances.delete(animation),()=>entrances.delete(animation));
+    }
+
+    highlight(0);
+    const journey = createPinnedScroll(stage, rows.length, select, 'frictions', (index, progress) => {
+      if (!stage.classList.contains('is-scroll-guided')) { list.style.removeProperty('transform'); return; }
+      const rowBox = rows[index].getBoundingClientRect();
+      const rowTop = rowBox.top - list.getBoundingClientRect().top;
+      const available = viewport.clientHeight - 20;
+      const from = Math.min(rowTop, Math.max(0, list.offsetHeight - available));
+      const to = Math.max(from, rowTop + rowBox.height - available);
+      list.style.transform = `translateY(${-from - (to - from) * progress}px)`;
+    });
+    new ResizeObserver(() => journey.refresh()).observe(list);
+    list.addEventListener('focusin', event => {
+      const index = rows.findIndex(row => row.contains(event.target as Node));
+      if (index < 0 || !journey.enabled) return;
+      const target = (event.target as HTMLElement).getBoundingClientRect();
+      const frame = viewport.getBoundingClientRect();
+      if (target.top < frame.top || target.bottom > frame.bottom) journey.goTo(index);
+    });
+    rows.forEach((row, index) => {
+      row.querySelector('summary')!.addEventListener('click', event => {
+        event.preventDefault();
+        row.open = !row.open;
+        current = index;
+        highlight(index);
+        // Manual opening still allows comparing several problems side by side.
+        journey.goTo(index);
+      });
+    });
+    reduced.addEventListener('change', () => { if (reduced.matches) entrances.forEach(animation => animation.cancel()); });
+  }
+</script>

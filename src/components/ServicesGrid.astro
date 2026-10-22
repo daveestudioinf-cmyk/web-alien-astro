@@ -16,7 +16,10 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
       <div class="section-heading"><span class="eyebrow">Soluciones conectadas con necesidades reales</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
       <ConceptPhoto scene="automation" alt="Escena conceptual de profesionales trabajando con herramientas de automatización" />
     </div>
+    <div class="services-stage">
+    <div class="services-sticky">
     <div class="services-explorer">
+      <div class="service-tabs-window">
       <div class="service-tabs" aria-label="Soluciones digitales" hidden>
         {content.groups.map((s,index)=>{
           const Icon=icons[index];
@@ -27,7 +30,9 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
           </button>;
         })}
       </div>
+      </div>
     <div class="service-panels">
+    <div class="service-panel-track">
       {content.groups.map((s,index)=>{
         const Icon=icons[index];
         const firstDescription=s.blocks.findIndex(b=>b.type==='paragraph');
@@ -47,18 +52,34 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
       })}
     </div>
     </div>
+    </div>
+    <div class="services-scroll-controls" hidden>
+      <span class="services-scroll-position" aria-label="Servicio actual">01 / 06</span>
+      <span>Desplázate para explorar los servicios</span>
+      <a href="#casos">Continuar después de los servicios <ArrowUpRight size={15} aria-hidden="true" /></a>
+    </div>
+    </div>
+    </div>
   </div>
 </section>
 <script>
+  import { createPinnedScroll } from '../lib/scroll-journey';
   const explorer = document.querySelector<HTMLElement>('.services-explorer');
   if (explorer) {
     const tablist = explorer.querySelector<HTMLElement>('.service-tabs')!;
+    const tabWindow = explorer.querySelector<HTMLElement>('.service-tabs-window')!;
+    const panelWindow = explorer.querySelector<HTMLElement>('.service-panels')!;
+    const panelTrack = explorer.querySelector<HTMLElement>('.service-panel-track')!;
     const tabs = [...tablist.querySelectorAll<HTMLButtonElement>('.service-tab')];
     const panels = tabs.map(tab => document.getElementById(tab.dataset.panel!)!);
     const desktop = window.matchMedia('(min-width: 901px)');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const changes = new Set<Animation>();
     let activeIndex = -1;
+    let readingIndex = -1;
+    let readingOffset = 0;
+    let readingOverflow = 0;
+    let journey: ReturnType<typeof createPinnedScroll>;
     function activate(index: number, focus = false) {
       const previous = activeIndex;
       changes.forEach(animation => animation.cancel());
@@ -70,6 +91,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         panels[position].hidden = !selected;
       });
       activeIndex = index;
+      alignTabs(index);
       if (previous >= 0 && previous !== index && !reduced.matches && !focus && document.documentElement.dataset.input !== 'keyboard') {
         const track = (animation: Animation) => {
           changes.add(animation);
@@ -77,7 +99,13 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         };
         track(panels[index].animate([{ opacity: .4, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 220, easing: 'cubic-bezier(.23,1,.32,1)' }));
       }
-      if (focus) tabs[index].focus({ preventScroll: true });
+      if (focus || (previous >= 0 && previous !== index && (panels[previous].contains(document.activeElement) || tabs.includes(document.activeElement as HTMLButtonElement)))) tabs[index].focus({ preventScroll: true });
+    }
+    function alignTabs(index: number) {
+      const selectedTab = tabs[index].getBoundingClientRect();
+      const tablistBox = tablist.getBoundingClientRect();
+      const tabOffset = Math.min(Math.max(0, tablist.offsetHeight - tabWindow.clientHeight), Math.max(0, selectedTab.top - tablistBox.top - (tabWindow.clientHeight - selectedTab.height) / 2));
+      tablist.style.transform = explorer.closest('.is-scroll-guided') ? `translateY(${-tabOffset}px)` : '';
     }
     function syncOrientation() {
       tablist.setAttribute('aria-orientation', desktop.matches ? 'vertical' : 'horizontal');
@@ -86,7 +114,16 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
       const index = panels.findIndex(panel => `#${panel.id}` === window.location.hash);
       if (index < 0) return;
       activate(index);
-      if (scroll) requestAnimationFrame(() => panels[index].scrollIntoView({ block: 'start', behavior: 'instant' }));
+      if (scroll) revealPanel(index);
+    }
+    function revealPanel(index: number) {
+      requestAnimationFrame(() => {
+        // Initial anchor layout may emit a scroll frame before this navigation.
+        if (activeIndex !== index) activate(index);
+        history.replaceState(null, '', `#${panels[index].id}`);
+        if (journey.enabled) journey.goTo(index);
+        else panels[index].scrollIntoView({ block: 'start', behavior: 'instant' });
+      });
     }
     tablist.setAttribute('role', 'tablist');
     tabs.forEach((tab, index) => {
@@ -96,6 +133,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
       panels[index].setAttribute('aria-labelledby', tab.id);
       tab.addEventListener('click', () => {
         activate(index);
+        journey.goTo(index);
         // Replace the current fragment without jumping away from the selector.
         history.replaceState(null, '', `#${panels[index].id}`);
       });
@@ -108,6 +146,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         if (next === undefined) return;
         event.preventDefault();
         activate(next, true);
+        journey.goTo(next);
         history.replaceState(null, '', `#${panels[next].id}`);
       });
     });
@@ -115,6 +154,37 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
     syncOrientation();
     explorer.classList.add('is-enhanced');
     tablist.hidden = false;
+    journey = createPinnedScroll(explorer.closest<HTMLElement>('.services-stage')!, tabs.length, index => {
+      activate(index);
+      // Preserve deep links while traversing the pinned section in either direction.
+      history.replaceState(null, '', `#${panels[index].id}`);
+    }, 'services', (index, progress) => {
+      const guided = explorer.closest('.is-scroll-guided');
+      const overflow = Math.max(0, panelTrack.offsetHeight - panelWindow.clientHeight);
+      let offset = overflow * progress;
+      // Expanding scope keeps the clicked heading in place and extends its reading time.
+      if (guided && readingIndex === index && Math.abs(overflow - readingOverflow) > 1) {
+        offset = Math.min(readingOffset, overflow);
+        journey.goTo(index, overflow ? offset / overflow : 0);
+      }
+      readingIndex = index;
+      readingOverflow = overflow;
+      readingOffset = offset;
+      panelTrack.style.transform = guided ? `translateY(${-offset}px)` : '';
+      alignTabs(index);
+    });
+    new ResizeObserver(() => journey.refresh()).observe(panelTrack);
+    panelWindow.addEventListener('focusin', event => {
+      if (!journey.enabled || panels.includes(event.target as HTMLElement)) return;
+      const target = (event.target as HTMLElement).getBoundingClientRect();
+      const frame = panelWindow.getBoundingClientRect();
+      if (target.top >= frame.top && target.bottom <= frame.bottom) return;
+      const overflow = Math.max(0, panelTrack.scrollHeight - panelWindow.clientHeight);
+      if (!overflow) return;
+      const offset = frame.top - panelTrack.getBoundingClientRect().top;
+      const distance = target.top < frame.top ? target.top - frame.top - 12 : target.bottom - frame.bottom + 12;
+      journey.goTo(activeIndex, Math.max(0, Math.min(1, (offset + distance) / overflow)));
+    });
     fromHash(true);
     desktop.addEventListener('change', syncOrientation);
     reduced.addEventListener('change', () => { if (reduced.matches) changes.forEach(animation => animation.cancel()); });
@@ -125,7 +195,7 @@ const ids=['diagnostico-estrategico','ia-automatizacion','marketing-demanda','se
         const index = panels.findIndex(panel => `#${panel.id}` === link.getAttribute('href'));
         if (index >= 0) {
           activate(index);
-          requestAnimationFrame(() => panels[index].scrollIntoView({ block: 'start', behavior: 'instant' }));
+          revealPanel(index);
         }
       });
     });
