@@ -6,7 +6,9 @@ interface Props {
   class?: string;
 }
 const { scene, alt, priority = false, class: className = '' } = Astro.props;
-const base = `/assets/brand/v3/photography/${scene}`;
+const base = scene === 'hero'
+  ? '/assets/brand/v3/photography/hero'
+  : `/assets/brand/v4/photography/${scene}`;
 ---
 <img
   class={`concept-photo ${className}`}

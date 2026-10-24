@@ -17,7 +17,7 @@ const outcome = content.groups[3].blocks.find(b => b.text?.startsWith('Resultado
         <svg viewBox="0 0 320 300" fill="none">
           <ellipse cx="160" cy="150" rx="136" ry="127" />
           <ellipse cx="160" cy="150" rx="144" ry="100" transform="rotate(-24 160 150)" opacity=".35" />
-          {['M160 150L64 60','M160 150L256 60','M160 150L64 240','M160 150L256 240'].map((d,index)=><path d={d} data-pillar-connection={index} stroke-dasharray="3 6" stroke-linecap="round" />)}
+          {['M160 150C160 100 96 110 64 60','M160 150C160 100 224 110 256 60','M160 150C160 200 96 190 64 240','M160 150C160 200 224 190 256 240'].map((d,index)=><path d={d} data-pillar-connection={index} stroke-linecap="round" />)}
           <circle cx="24" cy="150" r="3" fill="currentColor" stroke="none" />
           <circle cx="296" cy="150" r="3" fill="currentColor" stroke="none" />
         </svg>

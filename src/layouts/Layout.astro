@@ -29,10 +29,10 @@ const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizaci
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Alien Creativo" />
     <meta property="og:locale" content="es_CO" />
-    <meta name="theme-color" content="#fcfbff" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <script is:inline>
       if (document.documentElement.dataset.themeToggleEnabled === 'true') {
         try { document.documentElement.classList.toggle('dark', localStorage.getItem('theme-v3') === 'dark'); } catch {}
@@ -84,7 +84,7 @@ const nav = [{href:'#diagnostico',label:'Diagnóstico'}, {href:'#ia-automatizaci
       function syncTheme() {
         const dark=document.documentElement.classList.contains('dark');
         toggle?.setAttribute('aria-label',dark?'Cambiar a tema claro':'Cambiar a tema oscuro');
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#101e2c':'#fcfbff');
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#101e2c':'#ffffff');
       }
       syncTheme();
       toggle?.addEventListener('click', () => {

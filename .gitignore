@@ -28,3 +28,6 @@ pnpm-debug.log*
 .review/
 # Local AI runtime state
 .atl/
+
+# Local design brief
+/guia_de_diseno_integral_aliencreativo.md
