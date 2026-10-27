@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "start": "node ./dist/server/entry.mjs",
     "build": "astro build --mode preview",
     "build:preview": "astro build --mode preview",
     "build:production": "astro build --mode production",
@@ -14,6 +15,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/node": "^9.5.5",
     "astro": "^5.18.2",
     "lucide-astro": "^0.556.0"
   },
