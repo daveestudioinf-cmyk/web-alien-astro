@@ -24,9 +24,11 @@
     --rosa-100: #fde6f0; --rosa-200: #fbcce0; --rosa-300: #f7a6c9;
     --lavanda-50: #f4f5fb; --lavanda-100: #e8eaf6; --lavanda-300: #c3c8ec; --lavanda-500: #8a93d6;
     --cyan-30: rgba(0, 210, 255, .30);
-    --button-primary-bg: #1d2b64; --button-primary-hover: #2a3b80; --button-primary-text: #ffffff;
-    --shadow-button: 0 10px 24px rgba(29, 43, 100, .18);
-    --shadow-button-hover: 0 14px 30px rgba(29, 43, 100, .22);
+    --button-primary-bg: linear-gradient(to right, #b74274 0%, #68549c 100%);
+    --button-primary-hover: linear-gradient(to right, #9f3663 0%, #554383 100%);
+    --button-primary-text: #ffffff;
+    --shadow-button: 0 10px 24px rgba(104, 84, 156, .22);
+    --shadow-button-hover: 0 14px 30px rgba(104, 84, 156, .28);
   }
   .dark {
     --color-bg: #101e2c; --color-surface: #172b3e; --color-surface-hover: #243e56;
@@ -43,7 +45,6 @@
     --accent: #65def0; --brand-coral: #f2afce;
     --canvas: var(--color-bg);
     --rosa-100: #f2afce1f; --lavanda-100: #8bc3dc1f;
-    --button-primary-bg: #f5f7ff; --button-primary-hover: #dfe5f7; --button-primary-text: #1d2b64;
   }
   html { scroll-behavior: smooth; scroll-padding-top: 106px; color-scheme: light; background: var(--color-bg); color: var(--color-text-main); font-family: var(--font-body); }
   html.dark { color-scheme: dark; }
