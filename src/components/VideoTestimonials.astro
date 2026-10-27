@@ -1,6 +1,6 @@
 ---
 import SectionMarker from './SectionMarker.astro';
-import { Play } from 'lucide-astro';
+import { Play, Pause, Volume2, VolumeX, Maximize, ArrowLeft, ArrowRight } from 'lucide-astro';
 import { copy, groups } from '../lib/home';
 import ClientBlocks from './ClientBlocks.astro';
 const blocks=copy(7);
@@ -13,11 +13,180 @@ const videos=content.groups.slice(1);
   <div class="container">
     <div class="section-heading"><span class="eyebrow">Experiencia en diferentes contextos</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
     <article class="qualia-case"><h3>{qualia.title}</h3><ClientBlocks blocks={qualia.blocks} /></article>
-    <div class="testimonial-grid">
+    <div class="testimonial-grid" id="testimonial-track" aria-label="Testimonios de clientes">
       {videos.map(v=>{const url=v.blocks.find(b=>b.type==='video')?.url!; const videoId=new URL(url).searchParams.get('v');return <article class="testimonial">
-        <a class="video-link" href={url} target="_blank" rel="noopener noreferrer" aria-label={`Ver testimonio de ${v.title} en YouTube`}><img src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`} alt={`Testimonio de ${v.title}`} width="480" height="360" loading="lazy" /><span class="video-play"><Play size={18} strokeWidth={1.5} aria-hidden="true" /></span></a>
+        <div class="video-shell">
+        <div class="video-player" data-video-id={videoId} data-video-title={v.title}>
+          <button class="video-link" type="button" aria-label={`Reproducir testimonio de ${v.title}`}><img src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`} alt="" width="480" height="360" loading="lazy" /><span class="video-play"><Play size={18} strokeWidth={1.75} aria-hidden="true" /></span></button>
+        </div>
+        <div class="video-controls" role="group" aria-label={`Controles del testimonio de ${v.title}`} hidden>
+          <button type="button" data-action="play" aria-label="Pausar video"><Pause size={16} class="control-pause" aria-hidden="true" /><Play size={16} class="control-play" aria-hidden="true" /></button>
+          <button type="button" data-action="mute" aria-label="Silenciar video" aria-pressed="false"><Volume2 size={16} class="control-sound" aria-hidden="true" /><VolumeX size={16} class="control-muted" aria-hidden="true" /></button>
+          <button type="button" data-action="fullscreen" aria-label="Pantalla completa"><Maximize size={16} aria-hidden="true" /></button>
+        </div>
+        </div>
         <h3>{v.title}</h3><ClientBlocks blocks={v.blocks} />
       </article>;})}
     </div>
+    <div class="testimonial-pagination" hidden>
+      <button class="icon-button" type="button" data-testimonial-prev aria-label="Testimonio anterior" aria-controls="testimonial-track"><ArrowLeft size={20} aria-hidden="true" /></button>
+      <span class="testimonial-position" aria-live="polite" aria-atomic="true">1 de {videos.length}</span>
+      <button class="icon-button" type="button" data-testimonial-next aria-label="Testimonio siguiente" aria-controls="testimonial-track"><ArrowRight size={20} aria-hidden="true" /></button>
+    </div>
   </div>
 </section>
+<script>
+  interface VideoApi {
+    playVideo():void; pauseVideo():void; getPlayerState():number;
+    mute():void; unMute():void; isMuted():boolean; destroy():void;
+  }
+  interface VideoEvent { target:VideoApi; data?:number; }
+  type YouTubeApi={Player:new(iframe:HTMLIFrameElement,options:{events:{onReady:(event:VideoEvent)=>void;onStateChange:(event:VideoEvent)=>void}})=>VideoApi};
+  const youtubeWindow=window as Window & {YT?:YouTubeApi;onYouTubeIframeAPIReady?:()=>void};
+  let apiReady:Promise<YouTubeApi>|undefined;
+  function loadApi(){
+    return apiReady??=new Promise<YouTubeApi>((resolve,reject)=>{
+      if(youtubeWindow.YT?.Player){resolve(youtubeWindow.YT);return;}
+      const previous=youtubeWindow.onYouTubeIframeAPIReady;
+      youtubeWindow.onYouTubeIframeAPIReady=()=>{previous?.();resolve(youtubeWindow.YT!);};
+      const script=document.createElement('script');script.src='https://www.youtube.com/iframe_api';
+      script.onerror=()=>{apiReady=undefined;reject(new Error('Video API unavailable'));};
+      document.head.append(script);
+    });
+  }
+  const players=[...document.querySelectorAll<HTMLElement>('.video-player')];
+  const instances=new Map<HTMLElement,VideoApi>();
+  players.forEach(player=>{
+    const shell=player.closest<HTMLElement>('.video-shell')!;
+    const button=player.querySelector<HTMLButtonElement>('button')!;
+    const controls=shell.querySelector<HTMLElement>('.video-controls')!;
+    const play=controls.querySelector<HTMLButtonElement>('[data-action="play"]')!;
+    const mute=controls.querySelector<HTMLButtonElement>('[data-action="mute"]')!;
+    const fullscreen=controls.querySelector<HTMLButtonElement>('[data-action="fullscreen"]')!;
+    function sync(api:VideoApi){
+      const paused=api.getPlayerState()!==1;
+      controls.dataset.paused=String(paused);
+      play.setAttribute('aria-label',paused?'Reproducir video':'Pausar video');
+      mute.setAttribute('aria-pressed',String(api.isMuted()));
+      mute.setAttribute('aria-label',api.isMuted()?'Activar sonido':'Silenciar video');
+    }
+    play.addEventListener('click',()=>{
+      const api=instances.get(player);if(!api)return;
+      if(api.getPlayerState()===1)api.pauseVideo();else api.playVideo();
+    });
+    mute.addEventListener('click',()=>{
+      const api=instances.get(player);if(!api)return;
+      const muted=mute.getAttribute('aria-pressed')!=='true';
+      if(muted)api.mute();else api.unMute();
+      mute.setAttribute('aria-pressed',String(muted));
+      mute.setAttribute('aria-label',muted?'Activar sonido':'Silenciar video');
+    });
+    fullscreen.hidden=!shell.requestFullscreen;
+    fullscreen.addEventListener('click',()=>{
+      const action=document.fullscreenElement?document.exitFullscreen():shell.requestFullscreen();
+      action.catch(()=>{});
+    });
+    document.addEventListener('fullscreenchange',()=>fullscreen.setAttribute('aria-label',document.fullscreenElement===shell?'Salir de pantalla completa':'Pantalla completa'));
+    button.addEventListener('click',async(event)=>{
+      // Only one testimony plays at a time; the others return to their poster.
+      players.forEach(other=>{
+        instances.get(other)?.destroy();instances.delete(other);
+        other.querySelector('iframe')?.remove();
+        other.querySelector<HTMLButtonElement>('button')!.hidden=false;
+        other.closest('.video-shell')!.querySelector<HTMLElement>('.video-controls')!.hidden=true;
+      });
+      const iframe=document.createElement('iframe');
+      const url=new URL(`https://www.youtube-nocookie.com/embed/${player.dataset.videoId}`);
+      url.search=new URLSearchParams({autoplay:'1',playsinline:'1',rel:'0',hl:'es',controls:'0',enablejsapi:'1',origin:window.location.origin,iv_load_policy:'3'}).toString();
+      iframe.src=url.href;
+      iframe.title=`Testimonio de ${player.dataset.videoTitle}`;
+      iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen=true;
+      iframe.referrerPolicy='strict-origin-when-cross-origin';
+      button.hidden=true;
+      player.append(iframe);
+      try{
+        const api=await loadApi();if(!iframe.isConnected)return;
+        new api.Player(iframe,{events:{
+          onReady:({target})=>{
+            if(!iframe.isConnected)return;
+            instances.set(player,target);controls.hidden=false;sync(target);
+            if(player.closest<HTMLElement>('.testimonial')?.inert) target.pauseVideo();
+            if(event.detail===0&&(document.activeElement===button||document.activeElement===document.body))play.focus({preventScroll:true});
+          },
+          onStateChange:({target})=>{if(iframe.isConnected)sync(target);}
+        }});
+      }catch{
+        // Keep usable playback controls if the optional API cannot load.
+        if(iframe.isConnected){url.searchParams.set('controls','1');iframe.src=url.href;}
+      }
+    });
+  });
+
+  const track=document.getElementById('testimonial-track');
+  const pagination=document.querySelector<HTMLElement>('.testimonial-pagination');
+  if(track && pagination){
+    const slides=[...track.querySelectorAll<HTMLElement>('.testimonial')];
+    const previous=pagination.querySelector<HTMLButtonElement>('[data-testimonial-prev]')!;
+    const next=pagination.querySelector<HTMLButtonElement>('[data-testimonial-next]')!;
+    const position=pagination.querySelector<HTMLElement>('.testimonial-position')!;
+    const mobile=window.matchMedia('(max-width: 700px)');
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+    let current=0, scheduled=false;
+    function pauseSlide(slide: HTMLElement){
+      const player=slide.querySelector<HTMLElement>('.video-player')!;
+      const api=instances.get(player);
+      if(api){
+        api.pauseVideo();
+        const controls=player.closest('.video-shell')!.querySelector<HTMLElement>('.video-controls')!;
+        controls.dataset.paused='true';
+        controls.querySelector('[data-action="play"]')?.setAttribute('aria-label','Reproducir video');
+      }
+      else player.querySelector('iframe')?.contentWindow?.postMessage(JSON.stringify({event:'command',func:'pauseVideo',args:[]}), 'https://www.youtube-nocookie.com');
+    }
+    function update(index: number){
+      if(index!==current && mobile.matches) pauseSlide(slides[current]);
+      current=index;
+      previous.disabled=current===0;
+      next.disabled=current===slides.length-1;
+      position.textContent=`${current+1} de ${slides.length}`;
+      slides.forEach((slide,i)=>{
+        slide.inert=mobile.matches && i!==current;
+        if(mobile.matches){
+          slide.setAttribute('role','group');
+          slide.setAttribute('aria-roledescription','diapositiva');
+          slide.setAttribute('aria-label',`${i+1} de ${slides.length}`);
+        }else{
+          slide.removeAttribute('role');slide.removeAttribute('aria-roledescription');slide.removeAttribute('aria-label');
+        }
+      });
+    }
+    function go(index: number){
+      const bounded=Math.max(0,Math.min(slides.length-1,index));
+      track!.scrollTo({left:slides[bounded].offsetLeft-slides[0].offsetLeft,behavior:reduced.matches?'instant':'smooth'});
+    }
+    function syncLayout(){
+      pagination!.hidden=!mobile.matches;
+      track!.classList.toggle('is-carousel',mobile.matches);
+      if(mobile.matches){track!.setAttribute('role','region');track!.setAttribute('aria-roledescription','carrusel');}
+      else{track!.removeAttribute('role');track!.removeAttribute('aria-roledescription');}
+      update(current);
+      track!.scrollTo({left:mobile.matches?slides[current].offsetLeft-slides[0].offsetLeft:0,behavior:'instant'});
+    }
+    previous.addEventListener('click',()=>go(current-1));
+    next.addEventListener('click',()=>go(current+1));
+    track.addEventListener('scroll',()=>{
+      if(scheduled || !mobile.matches)return;
+      scheduled=true;
+      requestAnimationFrame(()=>{
+        scheduled=false;
+        const left=track!.scrollLeft;
+        const distances=slides.map(slide=>Math.abs(slide.offsetLeft-slides[0].offsetLeft-left));
+        update(distances.indexOf(Math.min(...distances)));
+      });
+    },{passive:true});
+    mobile.addEventListener('change',syncLayout);
+    new ResizeObserver(syncLayout).observe(track);
+    syncLayout();
+  }
+</script>

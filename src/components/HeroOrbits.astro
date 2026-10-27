@@ -34,11 +34,15 @@ function position(index: number) {
     </div>;})}
   </div>
 </div>
+<button class="orbit-toggle" type="button" aria-pressed="false" hidden>Pausar órbita</button>
 <script>
   const orbit = document.querySelector<HTMLElement>('.hero-orbits');
-  const art = orbit?.closest('.hero-art');
+  const art = orbit?.closest<HTMLElement>('.hero-orbit-signature');
   const animations: Animation[] = [];
-  let hovered = art?.matches(':hover') ?? false;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const toggle = orbit?.parentElement?.querySelector<HTMLButtonElement>('.orbit-toggle');
+  let paused = false, visible = true;
+  let hovered = false;
   const tilt = -18 * Math.PI / 180;
   function point(angle: number, width: number, height: number) {
     const x = .41 * width * Math.sin(angle), y = -.41 * height * Math.cos(angle);
@@ -46,7 +50,7 @@ function position(index: number) {
   }
   function update() {
     if (!orbit) return;
-    const playing = !hovered;
+    const playing = !paused && !hovered && visible && !document.hidden && !orbit.contains(document.activeElement);
     orbit.dataset.playing = String(playing);
     animations.forEach(animation => playing ? animation.play() : animation.pause());
   }
@@ -55,6 +59,7 @@ function position(index: number) {
     const time = Number(animations[0]?.currentTime ?? 0);
     animations.splice(0).forEach(animation=>animation.cancel());
     const {width,height}=orbit.getBoundingClientRect();
+    if(!width || !height) return;
     orbit.querySelectorAll<HTMLElement>('.orbit-node').forEach((node,index)=>{
       const phase=index*Math.PI/4;
       const start=point(phase,width,height);
@@ -64,17 +69,33 @@ function position(index: number) {
         const p=point(phase+frame/96*2*Math.PI,width,height);
         return {transform:`translate(-50%, -50%) translate(${p.x-start.x}px, ${p.y-start.y}px)`};
       });
-      const animation=node.animate(frames,{duration:64000,iterations:Infinity,easing:'linear'});
+      // Preserve the requested orbital movement, with half the speed under reduced motion.
+      const animation=node.animate(frames,{duration:reducedMotion.matches?128000:64000,iterations:Infinity,easing:'linear'});
       animation.pause();
       animation.currentTime=time;
       animations.push(animation);
     });
     update();
+    if(toggle) toggle.hidden=false;
   }
   if(orbit){
     build();
     new ResizeObserver(build).observe(orbit);
-    art?.addEventListener('pointerenter',event=>{hovered=(event as PointerEvent).pointerType==='mouse';update();});
-    art?.addEventListener('pointerleave',()=>{hovered=false;update();});
+    new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;update();}).observe(orbit);
+    reducedMotion.addEventListener('change',build);
+    document.addEventListener('visibilitychange',update);
+    orbit.addEventListener('focusin',update);
+    orbit.addEventListener('focusout',()=>requestAnimationFrame(update));
+    art?.addEventListener('pointerenter', event=>{
+      if(event.pointerType==='mouse'){hovered=true;update();}
+    });
+    art?.addEventListener('pointerleave', ()=>{hovered=false;update();});
+    art?.addEventListener('pointercancel', ()=>{hovered=false;update();});
+    toggle?.addEventListener('click',()=>{
+      paused=!paused;
+      toggle.setAttribute('aria-pressed',String(paused));
+      toggle.textContent=paused?'Reanudar órbita':'Pausar órbita';
+      update();
+    });
   }
 </script>

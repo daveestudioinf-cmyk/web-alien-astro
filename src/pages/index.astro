@@ -14,17 +14,8 @@ import FaqSection from '../components/FaqSection.astro';
 import FinalCta from '../components/FinalCta.astro';
 
 import { meta } from '../lib/home';
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: 'Alien Creativo',
-  url: 'https://aliencreativo.com/',
-  logo: 'https://aliencreativo.com/assets/images/logo-alien-creativo.svg',
-  description: 'Estrategia, marketing digital, inteligencia artificial y procesos comerciales.',
-  email: 'hola@aliencreativo.com',
-  telephone: '+573053552822',
-  areaServed: ['Medellín', 'Valle de Aburrá']
-};
+import { seoSchema } from '../lib/seo';
+const jsonLd = seoSchema;
 ---
 <Layout title={meta.title} description={meta.description} canonical={meta.canonical}>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

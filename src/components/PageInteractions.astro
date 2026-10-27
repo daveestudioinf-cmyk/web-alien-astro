@@ -56,7 +56,7 @@
     locationResize = requestAnimationFrame(observeLocations);
   }, { passive: true });
 
-  // One gentle entrance per chapter. Content is visible even without JavaScript.
+  // Finite entrances never add scroll distance; content is visible without JavaScript.
   const entrances = new Set<Animation>();
   const headingObserver = new IntersectionObserver(entries => {
     for (const entry of entries) {
@@ -64,14 +64,30 @@
       headingObserver.unobserve(entry.target);
       if (reducedMotion.matches || root.dataset.input === 'keyboard') continue;
       const animation = entry.target.animate([
-        { opacity: .65, transform: 'translateY(8px)' },
+        { opacity: .75, transform: 'translateY(12px)' },
         { opacity: 1, transform: 'translateY(0)' }
-      ], { duration: 300, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
+      ], { duration: 550, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
       entrances.add(animation);
       animation.finished.then(() => entrances.delete(animation), () => entrances.delete(animation));
     }
   }, { threshold: .15 });
-  document.querySelectorAll('.section-heading').forEach(heading => headingObserver.observe(heading));
+  document.querySelectorAll('.section-heading > *, .hero-grid > div:first-child > *, .concept-photo, .principle').forEach(element => headingObserver.observe(element));
+  const brandObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      brandObserver.unobserve(entry.target);
+      if (reducedMotion.matches || root.dataset.input === 'keyboard') continue;
+      const track = (element: Element | null, frames: Keyframe[], duration: number) => {
+        if (!element) return;
+        const animation = element.animate(frames, { duration, easing: 'cubic-bezier(.23,1,.32,1)' });
+        entrances.add(animation);
+        animation.finished.then(()=>entrances.delete(animation),()=>entrances.delete(animation));
+      };
+      track(entry.target.querySelector('.brand-art-ring'), [{ opacity: .25, transform: 'scale(.8) rotate(-24deg)' }, { opacity: 1, transform: 'scale(1) rotate(0deg)' }], 900);
+      track(entry.target.querySelector('img'), [{ opacity: .4, transform: 'translateY(20px) scale(.96)' }, { opacity: 1, transform: 'translateY(0) scale(1)' }], 750);
+    }
+  }, { threshold: .2 });
+  document.querySelectorAll('[data-brand-reveal]').forEach(element => brandObserver.observe(element));
   reducedMotion.addEventListener('change', event => {
     if (event.matches) entrances.forEach(animation => animation.cancel());
   });

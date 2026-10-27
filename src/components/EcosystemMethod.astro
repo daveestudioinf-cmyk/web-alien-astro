@@ -14,12 +14,67 @@ const outcome = content.groups[3].blocks.find(b => b.text?.startsWith('Resultado
     <div class="brand-section-intro">
       <div class="section-heading"><span class="eyebrow">Un ecosistema, no servicios aislados</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
       <div class="ecosystem-constellation" aria-hidden="true">
-        <svg viewBox="0 0 320 300" fill="none"><circle cx="160" cy="150" r="108" /><circle cx="160" cy="150" r="64" /><path d="M160 42V258M52 150H268" stroke-dasharray="3 7" /></svg>
-        <img src="/assets/brand/alien-symbol.svg" alt="" width="46" height="65" loading="lazy" />
-        {content.groups.map((p,index)=>{const Icon=icons[index];return <span class={`constellation-point point-${index}`}><Icon size={20} strokeWidth={1.4}/><small>{p.title.replace(/^\d+\. /,'')}</small></span>;})}
+        <svg viewBox="0 0 320 300" fill="none">
+          <ellipse cx="160" cy="150" rx="136" ry="127" />
+          <ellipse cx="160" cy="150" rx="144" ry="100" transform="rotate(-24 160 150)" opacity=".35" />
+          {['M160 150C160 100 96 110 64 60','M160 150C160 100 224 110 256 60','M160 150C160 200 96 190 64 240','M160 150C160 200 224 190 256 240'].map((d,index)=><path d={d} data-pillar-connection={index} stroke-linecap="round" />)}
+          <circle cx="24" cy="150" r="3" fill="currentColor" stroke="none" />
+          <circle cx="296" cy="150" r="3" fill="currentColor" stroke="none" />
+        </svg>
+        <span class="ecosystem-hub"><img src="/assets/brand/alien-symbol.svg" alt="" width="46" height="65" loading="lazy" /></span>
+        {content.groups.map((p,index)=>{const Icon=icons[index];return <span class={`constellation-point point-${index}`} data-pillar-node={index}><Icon size={20} strokeWidth={1.75}/><small>{p.title.replace(/^\d+\. /,'')}</small></span>;})}
       </div>
     </div>
-    <div class="pillars">{content.groups.map((p,index)=>{ const Icon=icons[index]; return <article class="pillar"><div style="display:flex;justify-content:space-between"><span class="number">0{index+1}</span><Icon size={23} strokeWidth={1.4} class="quiet-icon" aria-hidden="true" /></div><h3>{p.title.replace(/^\d+\. /,'')}</h3><ClientBlocks blocks={p.blocks.filter(b=>!b.text?.startsWith('Resultado esperado:'))} /></article>; })}</div>
+    <div class="pillars">{content.groups.map((p,index)=>{ const Icon=icons[index]; return <article class="pillar" data-pillar={index}><div class="pillar-heading"><span class="number">0{index+1}</span><Icon size={23} strokeWidth={1.75} class="quiet-icon" aria-hidden="true" /></div><h3>{p.title.replace(/^\d+\. /,'')}</h3><ClientBlocks blocks={p.blocks.filter(b=>!b.text?.startsWith('Resultado esperado:'))} /></article>; })}</div>
     <div class="inline-callout"><p>{outcome?.text}</p><a href="#diagnostico" class="text-link">{cta(blocks)} <ArrowUpRight size={16} /></a></div>
   </div>
 </section>
+
+<script>
+  const ecosystem = document.querySelector('#ecosistema');
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-pillar]')];
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const revealed = new Set<HTMLElement>();
+  const visible = new Set<HTMLElement>();
+  const animations = new Set<Animation>();
+
+  function reveal(card: HTMLElement, delay = 0) {
+    if (revealed.has(card)) return;
+    revealed.add(card);
+    card.dataset.revealed = 'true';
+    ecosystem?.querySelector(`[data-pillar-node="${card.dataset.pillar}"]`)?.setAttribute('data-revealed', 'true');
+    ecosystem?.querySelector(`[data-pillar-connection="${card.dataset.pillar}"]`)?.setAttribute('data-revealed', 'true');
+    const body = card.querySelector('.client-copy');
+    if (!body || motion.matches || document.documentElement.dataset.input === 'keyboard') return;
+    // Animate only after intersection: content remains readable without JS and to find-in-page.
+    const animation = body.animate([
+      { opacity: 0, transform: 'translateY(16px)' },
+      { opacity: 1, transform: 'translateY(0)' }
+    ], { duration: 540, delay, fill: 'backwards', easing: 'cubic-bezier(.23,1,.32,1)' });
+    animations.add(animation);
+    animation.finished.then(() => animations.delete(animation), () => animations.delete(animation));
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    let order = 0;
+    entries.forEach(entry => {
+      const card = entry.target as HTMLElement;
+      if (entry.isIntersecting) { visible.add(card); reveal(card, order++ * 100); }
+      else visible.delete(card);
+    });
+    const current = [...visible].sort((a,b) => Math.abs(a.getBoundingClientRect().top-innerHeight*.35)-Math.abs(b.getBoundingClientRect().top-innerHeight*.35))[0];
+    if (!current) return;
+    ecosystem?.querySelectorAll('[data-pillar], [data-pillar-node], [data-pillar-connection]').forEach(element => {
+      const index = element.getAttribute('data-pillar') ?? element.getAttribute('data-pillar-node') ?? element.getAttribute('data-pillar-connection');
+      element.setAttribute('data-active', String(index === current.dataset.pillar));
+    });
+  }, { rootMargin: '-88px 0px -8% 0px', threshold: 0 });
+  cards.forEach(card => observer.observe(card));
+  function respectMotionPreference() {
+    if (!motion.matches) return;
+    animations.forEach(animation => animation.cancel());
+    cards.forEach(card => reveal(card));
+  }
+  motion.addEventListener('change', respectMotionPreference);
+  respectMotionPreference();
+</script>

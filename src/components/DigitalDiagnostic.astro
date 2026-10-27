@@ -3,6 +3,7 @@ import SectionMarker from './SectionMarker.astro';
 import { ArrowUpRight, LockKeyhole } from 'lucide-astro';
 import { copy,cta } from '../lib/home';
 import ClientBlocks from './ClientBlocks.astro';
+import ConceptPhoto from './ConceptPhoto.astro';
 const blocks=copy(3);
 ---
 
@@ -13,6 +14,10 @@ const blocks=copy(3);
       <div class="section-heading"><span class="eyebrow">Diagnóstico Digital</span><h2>{blocks[0].text}</h2></div>
       <ClientBlocks blocks={blocks.slice(1)} />
     </div>
+    <div class="diagnostic-aside">
+      <div class="diagnostic-visual">
+        <ConceptPhoto scene="diagnostic" alt="Escena conceptual de análisis y diagnóstico de un negocio" />
+      </div>
     <div class="diagnostic-form">
       <div class="diagnostic-signature" aria-hidden="true"><img src="/assets/brand/alien-symbol.svg" alt="" width="28" height="39" loading="lazy" /><span></span></div>
       <h3>{cta(blocks,'CTA principal')}</h3>
@@ -27,7 +32,8 @@ const blocks=copy(3);
         <div><label for="main-challenge">¿Qué quieres mejorar? *</label><select id="main-challenge" name="challenge" required><option value="" disabled selected>Selecciona tu principal desafío</option><option>Atraer más clientes calificados</option><option>Mejorar el seguimiento comercial</option><option>Automatizar tareas con inteligencia artificial</option><option>Crear o renovar mi sitio web</option><option>Organizar el CRM y las ventas</option></select></div>
         <button class="button button-primary" type="submit" style="width:100%;margin-top:8px">{cta(blocks,'CTA principal')} <ArrowUpRight size={17} /></button>
       </form>
-      <p class="form-privacy"><LockKeyhole size={13} strokeWidth={1.5} class="quiet-icon" /> Tú decides cuándo enviar tu solicitud por WhatsApp.</p>
+      <p class="form-privacy"><LockKeyhole size={13} strokeWidth={1.75} class="quiet-icon" /> Tú decides cuándo enviar tu solicitud por WhatsApp.</p>
+    </div>
     </div>
   </div>
 </section>
