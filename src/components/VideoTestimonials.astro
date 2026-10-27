@@ -17,7 +17,7 @@ const videos=content.groups.slice(1);
       {videos.map(v=>{const url=v.blocks.find(b=>b.type==='video')?.url!; const videoId=new URL(url).searchParams.get('v');return <article class="testimonial">
         <div class="video-shell">
         <div class="video-player" data-video-id={videoId} data-video-title={v.title}>
-          <button class="video-link" type="button" aria-label={`Reproducir testimonio de ${v.title}`}><img src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`} alt="" width="480" height="360" loading="lazy" /><span class="video-play"><Play size={18} strokeWidth={1.5} aria-hidden="true" /></span></button>
+          <button class="video-link" type="button" aria-label={`Reproducir testimonio de ${v.title}`}><img src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`} alt="" width="480" height="360" loading="lazy" /><span class="video-play"><Play size={18} strokeWidth={1.75} aria-hidden="true" /></span></button>
         </div>
         <div class="video-controls" role="group" aria-label={`Controles del testimonio de ${v.title}`} hidden>
           <button type="button" data-action="play" aria-label="Pausar video"><Pause size={16} class="control-pause" aria-hidden="true" /><Play size={16} class="control-play" aria-hidden="true" /></button>

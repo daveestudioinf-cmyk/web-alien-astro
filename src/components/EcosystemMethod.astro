@@ -22,10 +22,10 @@ const outcome = content.groups[3].blocks.find(b => b.text?.startsWith('Resultado
           <circle cx="296" cy="150" r="3" fill="currentColor" stroke="none" />
         </svg>
         <span class="ecosystem-hub"><img src="/assets/brand/alien-symbol.svg" alt="" width="46" height="65" loading="lazy" /></span>
-        {content.groups.map((p,index)=>{const Icon=icons[index];return <span class={`constellation-point point-${index}`} data-pillar-node={index}><Icon size={20} strokeWidth={1.4}/><small>{p.title.replace(/^\d+\. /,'')}</small></span>;})}
+        {content.groups.map((p,index)=>{const Icon=icons[index];return <span class={`constellation-point point-${index}`} data-pillar-node={index}><Icon size={20} strokeWidth={1.75}/><small>{p.title.replace(/^\d+\. /,'')}</small></span>;})}
       </div>
     </div>
-    <div class="pillars">{content.groups.map((p,index)=>{ const Icon=icons[index]; return <article class="pillar" data-pillar={index}><div class="pillar-heading"><span class="number">0{index+1}</span><Icon size={23} strokeWidth={1.4} class="quiet-icon" aria-hidden="true" /></div><h3>{p.title.replace(/^\d+\. /,'')}</h3><ClientBlocks blocks={p.blocks.filter(b=>!b.text?.startsWith('Resultado esperado:'))} /></article>; })}</div>
+    <div class="pillars">{content.groups.map((p,index)=>{ const Icon=icons[index]; return <article class="pillar" data-pillar={index}><div class="pillar-heading"><span class="number">0{index+1}</span><Icon size={23} strokeWidth={1.75} class="quiet-icon" aria-hidden="true" /></div><h3>{p.title.replace(/^\d+\. /,'')}</h3><ClientBlocks blocks={p.blocks.filter(b=>!b.text?.startsWith('Resultado esperado:'))} /></article>; })}</div>
     <div class="inline-callout"><p>{outcome?.text}</p><a href="#diagnostico" class="text-link">{cta(blocks)} <ArrowUpRight size={16} /></a></div>
   </div>
 </section>

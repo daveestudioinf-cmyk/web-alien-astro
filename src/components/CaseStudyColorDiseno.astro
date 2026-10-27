@@ -16,7 +16,7 @@ const metricIcons=[UsersRound,FileText,Search,Sparkles];
     <div class="section-heading"><span class="eyebrow">Caso de éxito · Color & Diseño</span><h2>{blocks[0].text}</h2><ClientBlocks blocks={content.intro} /></div>
     <CaseShowcase />
     <h3 class="subsection-title">{content.groups[0].title}</h3>
-    <div class="case-metrics">{metrics.map((m,index)=>{const Icon=metricIcons[index];return <article class="case-metric"><div class="case-metric-top"><strong class:list={{'metric-value-long':index===1}}>{m.title}</strong><span class="case-metric-icon" aria-hidden="true"><Icon size={24} strokeWidth={1.5}/></span></div><h3>{m.blocks[0].text}</h3><ClientBlocks blocks={m.blocks.slice(1).filter(b=>b!==caution||index!==3)} /></article>;})}</div>
+    <div class="case-metrics">{metrics.map((m,index)=>{const Icon=metricIcons[index];return <article class="case-metric"><div class="case-metric-top"><strong class:list={{'metric-value-long':index===1}}>{m.title}</strong><span class="case-metric-icon" aria-hidden="true"><Icon size={24} strokeWidth={1.75}/></span></div><h3>{m.blocks[0].text}</h3><ClientBlocks blocks={m.blocks.slice(1).filter(b=>b!==caution||index!==3)} /></article>;})}</div>
     <ClientBlocks blocks={caution?[caution]:[]} />
     <div class="case-scope">{content.groups.slice(1).map(group=><div><h3 class="subsection-title">{group.title}</h3><ClientBlocks blocks={group.blocks} /></div>)}</div>
     <a class="button button-primary" style="margin-top:32px" href="#diagnostico">{cta(blocks)} <ArrowUpRight size={17} /></a>
